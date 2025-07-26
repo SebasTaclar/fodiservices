@@ -1,28 +1,28 @@
 <template>
   <section class="conocenos-section">
     <div class="overlay">
-      <h4>Frutillar, Chile · Décima Región de Los Lagos</h4>
+      <h4>Bogotá, Colombia · Región Andina</h4>
       <h2>CONÓCENOS</h2>
 
       <div class="cards-container">
         <div class="card" data-aos="fade-up" data-aos-delay="100">
-          <i class="fas fa-tools icon-card"></i>
+          <i class="fas fa-laptop-code icon-card"></i>
           <h3>¿Qué Hacemos?</h3>
-          <p>Nuestra empresa arrienda equipos de maquinaria y andamios, y vende herramientas para construcción a nivel
-            nacional.</p>
+          <p>Ofrecemos servicios de outsourcing tecnológico, desarrollo de software y consultoría IT para empresas de
+            todos los tamaños.</p>
         </div>
 
         <div class="card" data-aos="fade-up" data-aos-delay="200">
           <i class="fas fa-users icon-card"></i>
-          <h3>¿Quiénes Nos Conforman?</h3>
-          <p>Brindamos servicios a grandes y pequeñas empresas. Nuestros aliados WESCO e ITAKA garantizan calidad.</p>
+          <h3>¿Quiénes Somos?</h3>
+          <p>Somos expertos en tecnología con amplia experiencia en soluciones empresariales innovadoras y de calidad.
+          </p>
         </div>
 
         <div class="card" data-aos="fade-up" data-aos-delay="300">
           <i class="fas fa-handshake icon-card"></i>
           <h3>Nuestros Servicios</h3>
-          <p>Atención personalizada, asesorías y servicio técnico, apoyando a microempresarios del sector construcción.
-          </p>
+          <p>Desarrollo personalizado, soporte técnico 24/7 y consultoría especializada para impulsar tu negocio.</p>
         </div>
       </div>
     </div>
@@ -93,7 +93,7 @@ defineOptions({
   font-weight: 600;
   font-size: 1.2rem;
   margin: 10px 0 15px;
-  border-bottom: 2px solid #e74c3c;
+  border-bottom: 2px solid #FFA500;
   padding-bottom: 5px;
 }
 
@@ -109,7 +109,7 @@ defineOptions({
 
 .icon-card {
   font-size: 2.2rem;
-  color: #e74c3c;
+  color: #FFA500;
   margin-bottom: 10px;
 }
 

@@ -3,6 +3,9 @@
     <section class="section">
       <MainBanner />
     </section>
+    <section class="section">
+      <OutsourcingSection />
+    </section>
     <section id="offerings" class="section offset">
       <Offerings />
     </section>
@@ -17,6 +20,7 @@
 
 <script setup lang="ts">
 import MainBanner from '@/components/MainBanner.vue';
+import OutsourcingSection from '@/components/OutsourcingSection.vue';
 import Offerings from '@/components/Offerings.vue';
 import About from '@/components/About.vue';
 import Contact from '@/components/Contact.vue';

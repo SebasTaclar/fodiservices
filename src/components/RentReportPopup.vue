@@ -9,7 +9,7 @@
       <div class="modal-body">
         <div class="report-preview" ref="reportContent">
           <div class="report-header">
-            <img src="/images/logoayp.jpeg" alt="Logo AYP" class="logo">
+            <img src="/images/mainBanner2.png" alt="Logo FODISERVICES" class="logo">
             <div class="invoice-number">
               <h5>No. {{ rentId }}</h5>
             </div>
@@ -18,15 +18,16 @@
 
           <div class="company-info">
             <div class="report-title">
-              <h2>{{ isFinished ? "COMPROBANTE DE DEVOLUCIÓN Y COBRO AYPSPA" : "COMPROBANTE DE ARRIENDO AYPSPA" }}</h2>
+              <!-- <h2>{{ isFinished ? "COMPROBANTE DE DEVOLUCIÓN Y COBRO FODISERVICES" : "COMPROBANTE DE ARRIENDO
+                FODISERVICES" }}</h2> -->
               <p>ARRIENDO DE MÁQUINAS Y ANDAMIOS</p>
             </div>
 
             <div class="contact-info">
-              <p>Casa Matriz: Av septiembre 04</p>
-              <p>Teléfonos: 652421931 - +56 987531754 - +56 993013623</p>
-              <p>Correo: pamenicoruiz@gmail.com</p>
-              <p>Página web: http://www.aypspa.net</p>
+              <p>Casa Matriz: Bogotá-Colombia</p>
+              <p>Teléfonos: 123-456-7890</p>
+              <p>Correo: info@fodiservices.com</p>
+              <p>Página web: www.fodiservices.com</p>
             </div>
           </div>
 

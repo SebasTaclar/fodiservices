@@ -1,7 +1,7 @@
 <template>
   <header>
     <nav class="navbar">
-      <RouterLink class="link-navbar home" to="/">AYPSPA</RouterLink>
+      <RouterLink class="link-navbar home" to="/">FODISERVICES</RouterLink>
       <RouterLink v-if="isAdminRole" class="link-navbar" to="/clients">Clientes</RouterLink>
       <RouterLink v-if="isAdminRole" class="link-navbar" to="/products">Productos</RouterLink>
       <RouterLink v-if="isAdminRole" class="link-navbar" to="/rents">Arrendamientos</RouterLink>
@@ -59,7 +59,7 @@ watch(route, () => {
 
 <style scoped>
 .navbar {
-  background-color: #333;
+  background-color: #031633;
   margin: 0;
   width: 100%;
   display: flex;
@@ -71,6 +71,7 @@ watch(route, () => {
   z-index: 1000;
   height: 60px;
   padding: 0 20px;
+  box-shadow: 0 2px 10px rgba(255, 165, 0, 0.2);
 }
 
 .nav-controls {
@@ -90,14 +91,14 @@ watch(route, () => {
 }
 
 .link-navbar:hover {
-  color: var(--primary-color);
-  background-color: rgba(192, 192, 192, 0.3);
+  color: #FFA500;
+  background-color: rgba(255, 165, 0, 0.1);
   border-radius: 50px;
 }
 
 .home {
   font-size: 1.5rem;
-  color: var(--primary-color);
+  color: #FFA500;
   font-weight: 1000;
 }
 

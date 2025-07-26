@@ -1,117 +1,71 @@
 <template>
   <section class="hero">
     <div class="hero-container">
+      <!-- Lado izquierdo con contenido -->
       <div class="hero-content">
-        <div class=" letras">
-          <img src="/images/engranaje.png" alt="" class="service-icon-1">
-          <span class="letra-a">A</span>
-          <span class="letra-y">Y</span>
-          <span class="letra-p">P</span>
+        <div class="hero-title">
+          <h1>EXPERTOS EN</h1>
+          <h1 class="highlight">OUTSOURCING</h1>
         </div>
-        <div class="subtitle">
-          <p class="subtitle">LA SOLUCIÓN PARA TU CONSTRUCCIÓN</p>
+
+        <div class="hero-tags">
+          <span class="tag">INNOVATIVE DESIGN</span>
+          <span class="tag">TECHNICAL EXPERTISE</span>
+          <span class="tag">CLIENT-FOCUSED</span>
         </div>
-        <div class="linea-roja-nueva"></div>
-        <ul class="services-list">
-          <li style="--delay: 0s;">
-            <div class="service-icon"><img src="/images/bombilla-remo.png" alt=".service-icon" class="service-icon">
-            </div>
-            <p class="p-icon">ASESORÍA PERSONALIZADA</p>
-          </li>
-          <li style="--delay: 0.2s;">
-            <div class="service-icon"><img src="/images/herr-remo1.png" alt="" class="service-icon"></div>
-            <p class="p-icon">VENTA DE HERRAMIENTAS</p>
-          </li>
-          <li style="--delay: 0.4s;">
-            <div class="service-icon"><img src="/images/proveedor.png" alt="" class="service-icon"></div>
-            <p class="p-icon">PROVEEDORES WESCO E ITAKA</p>
-          </li>
-        </ul>
-        <!-- <div class="servicios-ayp">
-                <a href="#servicios-ayp" class="interactive-btn">CONOZCA NUESTROS SERVICIOS</a>
-              </div> -->
-      </div>
 
-      <div class="hero-visual">
-        <div class="hexagon">
-          <div class="hexagon-content">
-            <img src="/images/logoayp.jpeg" alt="Logo AYP" class="logo-hexagono">
-
-            <p class="letrero-rombo">Construimos contigo,<br> con calidad y <br> eficiencia garantizadas.</p>
+        <div class="hero-contact">
+          <div class="contact-item">
+            <span class="icon">📞</span>
+            <span>123-456-7890</span>
+          </div>
+          <div class="contact-item">
+            <span class="icon">🌐</span>
+            <span>www.fodiservices.com</span>
+          </div>
+          <div class="contact-item">
+            <span class="icon">📍</span>
+            <span>Bogotá-Colombia</span>
           </div>
         </div>
+      </div>
 
-        <div class="floating-tools">
-          <div class="tool">🔨</div>
-          <div class="tool">⚙️</div>
-          <div class="tool">🏗️</div>
-          <div class="tool">🔩</div>
+      <!-- Lado derecho con imágenes circulares -->
+      <div class="hero-visual">
+        <div class="images-container">
+          <div class="image-circle image-1">
+            <img src="/images/mainBanner1.jpg" alt="FODISERVICES - Outsourcing profesional">
+          </div>
+          <div class="image-circle image-2">
+            <img src="/images/mainBanner2.png" alt="FODISERVICES - Equipo experto">
+          </div>
+          <div class="image-circle image-3">
+            <img src="/images/mainBanner3.jpg" alt="FODISERVICES - Soluciones innovadoras">
+          </div>
         </div>
       </div>
     </div>
   </section>
-
 </template>
 
 <script setup lang="ts">
 </script>
 
 <style scoped>
-.letrero-rombo {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 2.1rem;
-  /* Tamaño de letra */
-  font-weight: 10;
-  /* Negrita */
-  letter-spacing: -2px;
-  /* Opcional: ajusta el espaciado */
-  color: white;
-  /* Opcional: color blanco para mejor contraste */
-}
-
-.logo-hexagono {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-  background: white;
-}
-
-/* Hero Section */
+/* Hero Section - Recreando el diseño exacto de la imagen */
 .hero {
   min-height: 100vh;
+  background-color: #031633;
+  background-image:
+    radial-gradient(circle, #FFA500 1px, transparent 1px),
+    radial-gradient(circle, #FFA500 1px, transparent 1px);
+  background-size: 50px 50px, 80px 80px;
+  background-position: 0 0, 25px 25px;
   display: flex;
   align-items: center;
-  position: relative;
-  background: linear-gradient(135deg, rgba(44, 62, 80, 0), rgba(74, 103, 65, 0)),
-    url(/images/img_constr.png);
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  font-family: 'Montserrat', sans-serif;
   overflow: hidden;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(1px);
-}
-
-@keyframes constructionPattern {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(20px);
-  }
+  position: relative;
 }
 
 .hero-container {
@@ -122,165 +76,84 @@
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
-  position: relative;
-  z-index: 1;
+  width: 100%;
 }
-
-
 
 .hero-content {
-  padding: 20px 90px 20px 20px;
-  display: inline-block;
+  color: white;
+  z-index: 2;
 }
 
-.hero-content h1 {
-  font-size: 4rem;
-  font-weight: 900;
-  margin-bottom: 1rem;
-  font-family: Arial, sans-serif;
+.hero-title {
+  margin-bottom: 2rem;
+}
+
+.hero-title h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
   margin: 0;
-  background-clip: text;
-  animation: titleGlow 3s ease-in-out infinite alternate;
-  /* Es el nombre de la animación (definida con @keyframes titleGlow {})2s	Duración de la animación (2 segundos por ciclo)ease-in-out	Función de tiempo: la animación empieza y termina suavementeinfinite	La animación se repite infinitamentealternate	La animación va y vuelve (reproduce normal y luego al revés)/  letter-spacing: -11px; / Ajusta aquí el espaciado */
-  letter-spacing: -10px;
+  letter-spacing: -2px;
 }
 
-.fondo-rojo {
-  background-color: rgba(238, 231, 231, 0.123);
-  /* rojo con opacidad */
-  display: inline-block;
-  padding: 3px 0px;
-  /* reduce el tamaño del fondo */
-  border-radius: 15px;
-  /* opcional: bordes suavizados */
+.hero-title .highlight {
+  color: #FFA500;
+  position: relative;
 }
 
-
-.letra-a {
-  color: white;
-  margin-top: 50px;
-  margin-left: 340px;
-  font-size: 2.6rem;
-  position: absolute;
-  animation: fadeInUp 1s ease-out 0.5s both;
-}
-
-.letra-y {
-  color: white;
-  margin-top: 50px;
-  margin-left: 370px;
-  font-size: 2.6rem;
-  position: absolute;
-  animation: fadeInUp 1s ease-out 0.5s both;
-}
-
-.letra-p {
-  color: white;
-  margin-top: 50px;
-  margin-left: 400px;
-  font-size: 2.6rem;
-  position: absolute;
-  animation: fadeInUp 1s ease-out 0.5s both;
-
-}
-
-@keyframes titleGlow {
-  0% {
-    filter: drop-shadow(0 0 5px #9B3B32);
-  }
-
-  100% {
-    filter: drop-shadow(0 0 20px #9B3B32);
-  }
-}
-
-.subtitle {
-  font-size: 1.7rem;
-  margin-bottom: 2rem;
-  margin-top: 6rem;
-  margin-right: -200px;
-  text-align: center;
-  color: #ecf0f1;
-  animation: fadeInUp 1s ease-out 0.5s both;
-
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.services-list {
-  list-style: none;
-  margin-bottom: 2rem;
-}
-
-.services-list li {
+.hero-tags {
   display: flex;
-  align-items: center;
   gap: 1rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+
+.tag {
+  background-color: #FFA500;
+  color: #031633;
+  font-weight: 700;
+  padding: 0.7rem 1.2rem;
+  border-radius: 25px;
+  font-size: 0.9rem;
   transition: all 0.3s ease;
-  animation: fadeInUp 1s ease-out calc(0.7s + var(--delay)) both;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.services-list li:hover {
-  transform: translateX(10px);
-  background: rgba(255, 107, 53, 0.1);
-  border-radius: 10px;
-  padding-left: 1.5rem;
+.tag:hover {
+  background-color: #E6940A;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4);
 }
 
-.p-icon {
-  font-weight: normal !important;
-  /* Asegura que no sea negrita */
-  font-size: 21px;
-  margin-top: 10px;
-
+.hero-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-
-.service-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+.contact-item {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
+  gap: 0.8rem;
+  font-size: 1.1rem;
+  font-weight: 500;
   transition: all 0.3s ease;
 }
 
-.services-list li:hover .service-icon {
-  transform: scale(1.2) rotate(10deg);
+.contact-item:hover {
+  color: #FFA500;
+  transform: translateX(8px);
 }
 
-.service-icon-1 {
-  height: 110px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-  transition: all 0.3s ease;
-  margin-top: 35px;
-  margin-bottom: 10px;
-  position: absolute;
-  animation: fadeInUp 1s ease-out 0.5s both;
+.contact-item .icon {
+  font-size: 1.3rem;
+  width: 24px;
+  text-align: center;
 }
 
-.services-list li:hover .service-icon-1 {
-  transform: scale(1.2) rotate(10deg);
-}
-
+/* Lado derecho con imágenes circulares */
 .hero-visual {
   position: relative;
   height: 600px;
@@ -289,133 +162,229 @@
   justify-content: center;
 }
 
-.hexagon {
-  width: 500px;
-  height: 400px;
-  margin-right: -220px;
-  background: linear-gradient(135deg, #1a1a1a, #1a1a1a);
-  clip-path: polygon(25% 0%,
-      /* arriba izquierda */
-      75% 0%,
-      /* arriba derecha */
-      100% 50%,
-      /* medio derecha */
-      75% 100%,
-      /* abajo derecha */
-      25% 100%,
-      /* abajo izquierda */
-      0% 50%
-      /* medio izquierda */
-    );
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.images-container {
   position: relative;
-  animation: hexagonFloat 3s ease-in-out infinite;
-  animation: fadeInUp 0.4s ease-out 0.5s both;
+  width: 100%;
+  height: 100%;
 }
 
-@keyframes hexagonFloat {
+.image-circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 5px solid #FFA500;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(255, 165, 0, 0.3);
+  transition: all 0.4s ease;
+}
+
+.image-circle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 40px rgba(255, 165, 0, 0.5);
+  border-color: #FFB733;
+}
+
+.image-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Posicionamiento específico de las imágenes */
+.image-1 {
+  width: 180px;
+  height: 180px;
+  top: 10%;
+  left: 20%;
+  animation: float1 6s ease-in-out infinite;
+}
+
+.image-2 {
+  width: 200px;
+  height: 200px;
+  top: 15%;
+  right: 10%;
+  animation: float2 8s ease-in-out infinite;
+}
+
+.image-3 {
+  width: 160px;
+  height: 160px;
+  bottom: 20%;
+  left: 35%;
+  animation: float3 7s ease-in-out infinite;
+}
+
+/* Animaciones de flotación */
+@keyframes float1 {
 
   0%,
   100% {
-    transform: translateX(30px)
+    transform: translateY(0px) rotate(0deg);
   }
 
   50% {
-    transform: translateX(0);
+    transform: translateY(-20px) rotate(2deg);
   }
 }
 
-.hexagon-content {
-  color: white;
-  text-align: center;
-  padding: 2rem;
+@keyframes float2 {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-30px) rotate(-2deg);
+  }
 }
 
-.hexagon-content h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  font-weight: 900;
+@keyframes float3 {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-15px) rotate(1deg);
+  }
 }
 
-.hexagon-content p {
-  font-size: 1.9rem;
-  margin-bottom: 4rem;
+/* Efectos adicionales */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: radial-gradient(circle at center,
+      rgba(255, 165, 0, 0.1) 0%,
+      transparent 70%);
+  pointer-events: none;
 }
 
-.cta-text {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #f44336;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.floating-tools {
+.hero::after {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  background-image:
+    radial-gradient(circle, rgba(255, 165, 0, 0.15) 1px, transparent 1px);
+  background-size: 30px 30px;
+  background-position: 15px 15px;
   pointer-events: none;
+  opacity: 0.3;
 }
 
-.tool {
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  animation: float 4s ease-in-out infinite;
-}
-
-.tool:nth-child(1) {
-  top: 15%;
-  left: 30%;
-  animation-delay: 0s;
-}
-
-.tool:nth-child(2) {
-  top: 20%;
-  right: -15%;
-  animation-delay: 1s;
-}
-
-.tool:nth-child(3) {
-  bottom: 13%;
-  left: 30%;
-  animation-delay: 2s;
-}
-
-.tool:nth-child(4) {
-  bottom: 20%;
-  right: -15%;
-  animation-delay: 3s;
-}
-
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .hero-container {
+    gap: 2rem;
   }
 
-  50% {
-    transform: translateY(-30px) rotate(180deg);
+  .hero-title h1 {
+    font-size: 2.8rem;
+  }
+
+  .image-1,
+  .image-2,
+  .image-3 {
+    width: 140px;
+    height: 140px;
+  }
+
+  .image-2 {
+    width: 160px;
+    height: 160px;
   }
 }
 
-.linea-roja-nueva {
-  width: 170%;
-  /* Ajusta el ancho para que llegue hasta el hexágono */
-  max-width: 700px;
-  height: 3px;
-  background-color: #f44336;
-  margin: 18px auto 0 auto;
-  border-radius: 2px;
+@media (max-width: 768px) {
+  .hero {
+    min-height: auto;
+    padding: 4rem 0;
+  }
+
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+
+  .hero-title h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-tags {
+    justify-content: center;
+  }
+
+  .hero-contact {
+    align-items: center;
+  }
+
+  .hero-visual {
+    height: 400px;
+  }
+
+  .image-1 {
+    top: 5%;
+    left: 10%;
+    width: 120px;
+    height: 120px;
+  }
+
+  .image-2 {
+    top: 10%;
+    right: 5%;
+    width: 140px;
+    height: 140px;
+  }
+
+  .image-3 {
+    bottom: 10%;
+    left: 25%;
+    width: 110px;
+    height: 110px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-container {
+    padding: 0 1rem;
+  }
+
+  .hero-title h1 {
+    font-size: 1.8rem;
+  }
+
+  .tag {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .contact-item {
+    font-size: 1rem;
+  }
+
+  .hero-visual {
+    height: 300px;
+  }
+
+  .image-1,
+  .image-2,
+  .image-3 {
+    width: 100px;
+    height: 100px;
+  }
+
+  .image-2 {
+    width: 120px;
+    height: 120px;
+  }
 }
 </style>

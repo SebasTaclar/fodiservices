@@ -3,35 +3,35 @@
     <div class="container-contacto">
       <h2 data-aos="fade-up">CONTÁCTANOS</h2>
       <p class="subtexto" data-aos="fade-up" data-aos-delay="100">
-        Si estás interesado en alguno de nuestros productos
+        Si estás interesado en nuestros servicios de outsourcing tecnológico
       </p>
 
       <div class="contacto-grid">
         <!-- IZQUIERDA: INFO DE CONTACTO -->
         <div class="info-contacto">
           <div class="card-contacto" data-aos="fade-right">
-            <i class="fas fa-user icon"></i>
-            <strong>Fono Yonatan Oyarzo:</strong><br>+56 987 531 754
+            <i class="fas fa-phone icon"></i>
+            <strong>Teléfono Principal:</strong><br>+57 123-456-7890
           </div>
           <div class="card-contacto" data-aos="fade-right" data-aos-delay="100">
-            <i class="fas fa-user icon"></i>
-            <strong>Fono Pamela Mansilla Ruiz:</strong><br>+56 993 013 623
+            <i class="fas fa-mobile-alt icon"></i>
+            <strong>WhatsApp:</strong><br>+57 987-654-3210
           </div>
           <div class="card-contacto" data-aos="fade-right" data-aos-delay="200">
-            <i class="fas fa-phone icon"></i>
-            <strong>Fono Fijo:</strong><br>65-2-421931
+            <i class="fas fa-envelope icon"></i>
+            <strong>Email Comercial:</strong><br>info@fodiservices.com
           </div>
           <div class="card-contacto" data-aos="fade-right" data-aos-delay="300">
             <i class="fas fa-envelope icon"></i>
-            <strong>Email 1:</strong><br>yonatan.8587@gmail.com
+            <strong>Email Soporte:</strong><br>soporte@fodiservices.com
           </div>
           <div class="card-contacto" data-aos="fade-right" data-aos-delay="400">
-            <i class="fas fa-envelope icon"></i>
-            <strong>Email 2:</strong><br>pamenicoruiz@gmail.com
+            <i class="fas fa-globe icon"></i>
+            <strong>Sitio Web:</strong><br>www.fodiservices.com
           </div>
           <div class="card-contacto" data-aos="fade-right" data-aos-delay="500">
             <i class="fas fa-map-marker-alt icon"></i>
-            <strong>Visítanos:</strong><br>Av Septiembre 04, Frutillar Alto
+            <strong>Visítanos:</strong><br>Bogotá, Colombia
           </div>
         </div>
         <!-- FOTO EMPRESA -->
@@ -44,7 +44,7 @@
         <h3 class="mapa-titulo" data-aos="fade-up">¿Cómo llegar?</h3>
         <div class="mapa-wrapper" data-aos="fade-up" data-aos-delay="100">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3005.154595993112!2d-73.05477!3d-41.131151!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x96178dacdd6cf6e7%3A0x7e444233f5e00047!2sAYP%20ANDAMIOS%20Y%20CONSTRUCCION!5e0!3m2!1ses!2sco!4v1752808331472!5m2!1ses!2sco"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d254508.51491066357!2d-74.21997901249999!3d4.648620899999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9bfd2da6cb29%3A0x239d635520a33914!2sBogot%C3%A1%2C%20Colombia!5e0!3m2!1ses!2sco!4v1673535735437!5m2!1ses!2sco"
             allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="mapa-contacto"></iframe>
         </div>
       </div>
@@ -151,8 +151,8 @@ defineOptions({
 
 .contacto-section {
   padding: 60px 20px;
-  background: #f9f9f9;
-  color: #333;
+  background: #031633;
+  color: white;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -165,7 +165,7 @@ defineOptions({
 .subtexto {
   text-align: center;
   font-size: 1rem;
-  color: #666;
+  color: #ccc;
   margin-bottom: 40px;
 }
 
@@ -191,11 +191,12 @@ defineOptions({
 .card-contacto {
   background: #fff;
   padding: 15px 20px;
-  border-left: 4px solid #e74c3c;
+  border-left: 4px solid #FFA500;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   font-size: 0.95rem;
   transition: transform 0.3s ease;
+  color: #333;
 }
 
 .card-contacto:hover {
@@ -204,7 +205,7 @@ defineOptions({
 
 .icon {
   margin-right: 10px;
-  color: #e74c3c;
+  color: #FFA500;
 }
 
 
@@ -250,11 +251,11 @@ defineOptions({
 .mapa-titulo {
   font-size: 1.7rem;
   font-weight: 700;
-  color: #e74c3c;
+  color: #FFA500;
   margin-bottom: 18px;
   letter-spacing: 1px;
   text-align: center;
-  text-shadow: 0 2px 8px rgba(231, 76, 60, 0.08);
+  text-shadow: 0 2px 8px rgba(255, 165, 0, 0.3);
 }
 
 .mapa-wrapper {

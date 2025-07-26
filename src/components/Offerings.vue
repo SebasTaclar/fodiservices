@@ -1,40 +1,39 @@
 <template>
-  <section id="servicios-ayp" class="services-section">
-    <p class="section-title-1">Arriendo de herramientas de construccion</p>
-    <h2 class="section-title">ESTOS SON NUESTROS SERVICIOS EN ARRIENDO</h2>
+  <section id="servicios-fodiservices" class="services-section">
+    <p class="section-title-1">Soluciones tecnológicas empresariales</p>
+    <h2 class="section-title">NUESTROS SERVICIOS DE OUTSOURCING</h2>
     <div class="service-grid">
       <div class="service-card">
-        <img src="/images/andamio.png" alt="Andamios">
-        <h3>ARRIENDO DE ANDAMIOS</h3>
-        <p>Andamios en General</p>
+        <img src="/images/mainBanner1.jpg" alt="Desarrollo de Software">
+        <h3>DESARROLLO DE SOFTWARE</h3>
+        <p>Soluciones personalizadas para tu empresa</p>
       </div>
       <div class="service-card">
-        <img src="/images/GENERADORES2.png" alt="Generadores">
-        <h3>GENERADORES DE ENERGÍA</h3>
-        <p>Generadores de 2200 Watts a 11000 Watts</p>
+        <img src="/images/mainBanner2.png" alt="Consultoría IT">
+        <h3>CONSULTORÍA IT</h3>
+        <p>Asesoramiento tecnológico especializado</p>
       </div>
       <div class="service-card">
-        <img src="/images/trompo.png" alt="Trompos">
-        <h3>ARRIENDO DE TROMPOS</h3>
-        <p>Trompos de 130 litros a 250 litros</p>
+        <img src="/images/mainBanner3.jpg" alt="Soporte Técnico">
+        <h3>SOPORTE TÉCNICO</h3>
+        <p>Atención 24/7 para tu tranquilidad</p>
       </div>
     </div>
-    <!--   <h2 class="section-title">TAMBIÉN OFRECEMOS SERVICIOS DE:</h2> -->
     <div class="service-grid">
       <div class="service-card">
-        <img src="/images/placa_compacta.jpg" alt="Placas Compactadoras">
-        <h3>PLACAS COMPACTADORAS</h3>
-        <p>Placa compactadora Rev 7.5hp 30kn Mtr Robn</p>
+        <img src="/images/andamio.png" alt="Infraestructura Cloud">
+        <h3>INFRAESTRUCTURA CLOUD</h3>
+        <p>Migración y gestión de servicios en la nube</p>
       </div>
       <div class="service-card">
-        <img src="/images/cortadora_pav.jpg" alt="Cortadora de Pavimento">
-        <h3>CORTADORA DE PAVIMENTO</h3>
-        <p>Bencinera 15hp 16-20" GEWILSON GFS480G</p>
+        <img src="/images/GENERADORES2.png" alt="Seguridad Informática">
+        <h3>SEGURIDAD INFORMÁTICA</h3>
+        <p>Protección integral de tus sistemas</p>
       </div>
       <div class="service-card">
-        <img src="/images/alisador1.jpg" alt="Alisador de Pavimentos">
-        <h3>ALISADOR DE PAVIMENTOS</h3>
-        <p>48 7,5hp Gasolina S-120</p>
+        <img src="/images/trompo.png" alt="Automatización">
+        <h3>AUTOMATIZACIÓN DE PROCESOS</h3>
+        <p>Optimización y digitalización empresarial</p>
       </div>
     </div>
   </section>
@@ -48,11 +47,10 @@ defineOptions({
 
 <style scoped>
 .services-section {
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url('/images/fondo3.jpg') center/cover no-repeat;
+  background: #031633;
   padding: 60px 20px;
   text-align: center;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: white;
 }
 
@@ -102,7 +100,7 @@ defineOptions({
 .service-card h3 {
   margin: 15px 10px 5px;
   font-size: 1.1rem;
-  color: #9B3B32;
+  color: #031633;
 }
 
 .service-card p {
