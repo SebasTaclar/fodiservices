@@ -32,9 +32,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import axios from 'axios';
-import { isTokenValid } from '@/utils/auth';
-import { getBaseUrl } from '@/utils/apiConfig';
+import { authenticateUser } from '@/utils/auth';
 import Spinner from '@/components/Spinner.vue';
 
 defineOptions({
@@ -49,34 +47,18 @@ const router = useRouter();
 const handleLogin = async () => {
   loading.value = true;
   try {
-    const url = `${getBaseUrl()}/api/v1/login`;
-    const response = await axios.get(url, {
-      params: {
-        username: email.value,
-        password: password.value,
-      },
-    });
-    console.log('Login response:', response.data);
-    if (response.data) {
-      console.log('Token:', response.data);
-      sessionStorage.setItem('token', response.data);
-      if (!isTokenValid()) {
-        sessionStorage.removeItem('token');
-        alert('token invalid');
-      } else {
-        router.push('/');
-      }
+    // Use demo authentication
+    const result = authenticateUser(email.value, password.value);
+
+    if (result.success) {
+      console.log('Login successful:', result.user);
+      router.push('/');
     } else {
-      alert('Login fallo: credenciales invalidas');
+      alert(result.message || 'Credenciales inválidas');
     }
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error('There was a problem with the axios operation:', error);
-      alert('Login failed: ' + error.message);
-    } else {
-      console.error('An unexpected error occurred:', error);
-      alert('Login failed: An unexpected error occurred');
-    }
+    console.error('Login error:', error);
+    alert('Error en el login: ' + (error as Error).message);
   } finally {
     loading.value = false;
   }

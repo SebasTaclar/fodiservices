@@ -15,34 +15,24 @@ const router = createRouter({
       component: () => import('../views/Login.vue'),
     },
     {
-      path: '/clients',
-      name: 'clients',
-      component: () => import('../views/Clients.vue'),
+      path: '/financiero',
+      name: 'financiero',
+      component: () => import('../views/Financiero.vue'),
     },
     {
-      path: '/products',
-      name: 'products',
-      component: () => import('../views/Products.vue'),
+      path: '/operativo',
+      name: 'operativo',
+      component: () => import('../views/Operativo.vue'),
     },
     {
-      path: '/rents',
-      name: 'rents',
-      component: () => import('../views/RentView.vue'),
+      path: '/producto',
+      name: 'producto',
+      component: () => import('../views/Producto.vue'),
     },
     {
-      path: '/privacy',
-      name: 'privacy',
-      component: () => import('../views/Maintenance.vue'),
-    },
-    {
-      path: '/contact',
-      name: 'contact',
-      component: () => import('../views/Maintenance.vue'),
-    },
-    {
-      path: '/maintenance',
-      name: 'maintenance',
-      component: () => import('../views/Maintenance.vue'),
+      path: '/recursos-humanos',
+      name: 'recursos-humanos',
+      component: () => import('../views/RecursosHumanos.vue'),
     },
     // Catch-all route - debe ir al final
     {
