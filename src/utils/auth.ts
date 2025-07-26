@@ -1,7 +1,7 @@
 // Demo users in memory
 const DEMO_USERS = [
   {
-    email: 'ingeneiro.mec.sebastian@gmail.com',
+    email: 'ingeniero.mec.sebastian@gmail.com',
     password: 'sebas123',
     role: 'admin',
     name: 'Sebastian',
