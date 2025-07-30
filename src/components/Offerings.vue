@@ -1,42 +1,66 @@
 <template>
-  <section id="servicios-fodiservices" class="services-section">
-    <p class="section-title-1">Soluciones tecnológicas empresariales</p>
-    <h2 class="section-title">NUESTROS SERVICIOS DE OUTSOURCING</h2>
-    <div class="service-grid">
-      <div class="service-card">
-        <img src="/images/mainBanner1.jpg" alt="Desarrollo de Software">
-        <h3>DESARROLLO DE SOFTWARE</h3>
-        <p>Soluciones personalizadas para tu empresa</p>
-      </div>
-      <div class="service-card">
-        <img src="/images/mainBanner2.png" alt="Consultoría IT">
-        <h3>CONSULTORÍA IT</h3>
-        <p>Asesoramiento tecnológico especializado</p>
-      </div>
-      <div class="service-card">
-        <img src="/images/mainBanner3.jpg" alt="Soporte Técnico">
-        <h3>SOPORTE TÉCNICO</h3>
-        <p>Atención 24/7 para tu tranquilidad</p>
-      </div>
-    </div>
-    <div class="service-grid">
-      <div class="service-card">
-        <img src="/images/andamio.png" alt="Infraestructura Cloud">
-        <h3>INFRAESTRUCTURA CLOUD</h3>
-        <p>Migración y gestión de servicios en la nube</p>
-      </div>
-      <div class="service-card">
-        <img src="/images/GENERADORES2.png" alt="Seguridad Informática">
-        <h3>SEGURIDAD INFORMÁTICA</h3>
-        <p>Protección integral de tus sistemas</p>
-      </div>
-      <div class="service-card">
-        <img src="/images/trompo.png" alt="Automatización">
-        <h3>AUTOMATIZACIÓN DE PROCESOS</h3>
-        <p>Optimización y digitalización empresarial</p>
-      </div>
-    </div>
-  </section>
+   <!-- SECCIÓN SERVICIOS -->
+    <section class="services-section" id="offerings">
+        <div class="services-bg"></div>
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Nuestros Servicios</h2>
+                <p class="section-subtitle">
+                    Empresa especializada en tercerización de procesos de producción, ensamble y producto terminado. Para las áreas de producción, ensamble y producto terminado
+                </p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🧩</div>
+                    <h3 class="service-title">Ensamble</h3>
+                    <p class="service-description">
+                        En bancos neumáticos para sub-ensambles de productos eléctricos y electrónicos.
+                    </p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">⚙️</div>
+                    <h3 class="service-title">Servicio</h3>
+                    <p class="service-description">
+                        Empacado, embolsado y sellado de partes y piezas eléctricas con suministro de empaque plástico (polietileno de alta y baja densidad).
+                    </p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3 class="service-title">Pintura</h3>
+                    <p class="service-description">
+                        Servicio de Pintura en aerografía, para piezas con geometría especial.
+                    </p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🎯</div>
+                    <h3 class="service-title">Otro Servicio</h3>
+                    <p class="service-description">
+                        Adaptaciones de procesos en sub enambles y procesos manueales para sistematizarlos
+                    </p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🖇️</div>
+                    <h3 class="service-title">Servicio XXX</h3>
+                    <p class="service-description">
+                        XXXXXXXXXXXXXXXXXXXXXXX
+                    </p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🧰</div>
+                    <h3 class="service-title">Servicio XXXX</h3>
+                    <p class="service-description">
+                        xxxxxxx
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 </template>
 
 <script setup lang="ts">
@@ -46,131 +70,140 @@ defineOptions({
 </script>
 
 <style scoped>
-.services-section {
-  background: #031633;
-  padding: 60px 20px;
-  text-align: center;
-  font-family: 'Montserrat', sans-serif;
-  color: white;
-}
+ /* SECCIÓN SERVICIOS */
+        .services-section {
+            background: linear-gradient(45deg, #f5f5f5, #e8e8e8);
+            padding: 5rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
 
-.section-title {
-  font-size: 1.8rem;
-  color: #ffffff;
-  margin-bottom: 30px;
-  text-transform: uppercase;
-  font-weight: bold;
-}
+        .services-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+        }
 
-.section-title-1 {
-  color: #ffffff;
-  margin-bottom: 0px;
-  text-transform: uppercase;
-  font-weight: 10px;
-}
+        .services-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, #1a237e, transparent);
+            border-radius: 50%;
+        }
 
-.service-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-  margin-bottom: 50px;
-}
+        .services-bg::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 400px;
+            height: 200px;
+            background: linear-gradient(45deg, #ffa000, transparent);
+            border-radius: 50% 50% 0 0;
+        }
 
-.service-card {
-  background: rgba(255, 255, 255, 0.932);
-  width: 280px;
-  border-radius: 15px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-  overflow: hidden;
-}
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
 
-.service-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
-}
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
 
-.service-card img {
-  width: 100%;
-  height: 170px;
-  object-fit: cover;
-}
+        .section-title {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #1a237e;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            position: relative;
+        }
 
-.service-card h3 {
-  margin: 15px 10px 5px;
-  font-size: 1.1rem;
-  color: #031633;
-}
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #ffa000, #ff8f00);
+            border-radius: 2px;
+        }
 
-.service-card p {
-  margin: 0 10px 15px;
-  font-size: 0.95rem;
-  color: #333;
-}
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
 
+        .service-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
 
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #ffa000, #ff8f00);
+        }
 
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(26, 35, 126, 0.15);
+        }
 
-.offerings {
-  background-color: rgba(34, 34, 34, 0.9);
-  height: 40vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 2rem;
-  overflow: hidden;
-}
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            color: white;
+        }
 
-.cards {
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  height: 80%;
-}
+        .service-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1a237e;
+            margin-bottom: 1rem;
+        }
 
-.card {
-  border: 2px solid white;
-  padding: 1rem;
-  border-radius: 8px;
-  color: rgb(19, 18, 18);
-  text-align: left;
-  cursor: pointer;
-  font-size: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
-  width: 30%;
-}
-
-.rent {
-  background-image: url('/images/rent_building_banner.png');
-  background-size: cover;
-}
-
-.sell {
-  background-image: url('/images/sell_tools_banner.png');
-  background-size: contain;
-}
-
-.card h2 {
-  margin: 0;
-  font-family: 'Bricolage Grotesque', sans-serif;
-}
-
-.card p {
-  margin: 0.5rem 0;
-  font-family: 'Bricolage Grotesque', sans-serif;
-}
-
-.card:hover {
-  background-color: rgba(23, 24, 26, 0.8);
-  background-image: none;
-  color: white;
-}
+        .service-description {
+            color: #5c5c5c;
+            line-height: 1.6;
+            text-align: justify;
+        }
 </style>

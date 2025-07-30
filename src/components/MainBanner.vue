@@ -4,8 +4,8 @@
       <!-- Lado izquierdo con contenido -->
       <div class="hero-content">
         <div class="hero-title">
-          <h1>EXPERTOS EN</h1>
-          <h1 class="highlight">OUTSOURCING</h1>
+          <h1>EXPERTOS EN
+          OUTSOURCING</h1>
         </div>
 
         <div class="hero-tags">
@@ -16,16 +16,7 @@
 
         <div class="hero-contact">
           <div class="contact-item">
-            <span class="icon">📞</span>
-            <span>123-456-7890</span>
-          </div>
-          <div class="contact-item">
-            <span class="icon">🌐</span>
-            <span>www.fodiservices.com</span>
-          </div>
-          <div class="contact-item">
-            <span class="icon">📍</span>
-            <span>Bogotá-Colombia</span>
+            <a href="#offerings" class="contact-button">CONOCE MAS</a>
           </div>
         </div>
       </div>
@@ -34,13 +25,13 @@
       <div class="hero-visual">
         <div class="images-container">
           <div class="image-circle image-1">
-            <img src="/images/mainBanner1.jpg" alt="FODISERVICES - Outsourcing profesional">
+            <img src="/images/mainBanner5.jpg" alt="FODISERVICES - Outsourcing profesional">
           </div>
           <div class="image-circle image-2">
-            <img src="/images/mainBanner2.png" alt="FODISERVICES - Equipo experto">
+            <img src="/images/tornillos.jpg" alt="FODISERVICES - Equipo experto">
           </div>
           <div class="image-circle image-3">
-            <img src="/images/mainBanner3.jpg" alt="FODISERVICES - Soluciones innovadoras">
+            <img src="/images/mainBanner4.jpg" alt="FODISERVICES - Soluciones innovadoras">
           </div>
         </div>
       </div>
@@ -53,19 +44,26 @@
 
 <style scoped>
 /* Hero Section - Recreando el diseño exacto de la imagen */
+
+
+
+
 .hero {
-  min-height: 100vh;
-  background-color: #031633;
-  background-image:
-    radial-gradient(circle, #FFA500 1px, transparent 1px),
-    radial-gradient(circle, #FFA500 1px, transparent 1px);
-  background-size: 50px 50px, 80px 80px;
-  background-position: 0 0, 25px 25px;
+  background-image: url('/public/images/fondos_geometrico_2.png'); /* cambia según tu ruta */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
   display: flex;
   align-items: center;
-  font-family: 'Montserrat', sans-serif;
-  overflow: hidden;
+  justify-content: center;
+  color: white;
+  text-align: center;
   position: relative;
+  z-index: 1;
+  font-family: 'Montserrat', sans-serif;
+  
+
 }
 
 .hero-container {
@@ -85,7 +83,7 @@
 }
 
 .hero-title {
-  margin-bottom: 2rem;
+  margin-bottom: 1.3rem;
 }
 
 .hero-title h1 {
@@ -94,6 +92,7 @@
   line-height: 1.1;
   margin: 0;
   letter-spacing: -2px;
+  text-align: left;
 }
 
 .hero-title .highlight {
@@ -104,8 +103,8 @@
 .hero-tags {
   display: flex;
   gap: 1rem;
-  flex-wrap: wrap;
   margin-bottom: 2.5rem;
+  text-align: center;
 }
 
 .tag {
@@ -113,18 +112,36 @@
   color: #031633;
   font-weight: 700;
   padding: 0.7rem 1.2rem;
-  border-radius: 25px;
+  border-radius: 12px;
   font-size: 0.9rem;
   transition: all 0.3s ease;
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
 .tag:hover {
   background-color: #E6940A;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4);
+}
+
+.contact-button {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  color: #ffffff;
+  margin-top: 1.0rem;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+a {
+  text-decoration: none;
 }
 
 .hero-contact {
@@ -209,7 +226,7 @@
 .image-3 {
   width: 160px;
   height: 160px;
-  bottom: 20%;
+  bottom: 30%;
   left: 35%;
   animation: float3 7s ease-in-out infinite;
 }
@@ -281,46 +298,35 @@
 }
 
 /* Responsive Design */
+/* Responsive Design */
+
+/* ------------------ RESPONSIVE DESIGN ------------------ */
+/* ------------------ RESPONSIVE HERO ------------------ */
 @media (max-width: 1024px) {
   .hero-container {
-    gap: 2rem;
-  }
-
-  .hero-title h1 {
-    font-size: 2.8rem;
-  }
-
-  .image-1,
-  .image-2,
-  .image-3 {
-    width: 140px;
-    height: 140px;
-  }
-
-  .image-2 {
-    width: 160px;
-    height: 160px;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero {
-    min-height: auto;
-    padding: 4rem 0;
-  }
-
-  .hero-container {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2rem;
+    padding: 2rem 1rem;
     text-align: center;
+    justify-items: center;
+    margin-top: 3rem;
   }
 
   .hero-title h1 {
     font-size: 2.2rem;
+    letter-spacing: -1px;
+    text-align: center;
   }
 
   .hero-tags {
     justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .hero-contact {
@@ -328,63 +334,57 @@
   }
 
   .hero-visual {
-    height: 400px;
+    height: auto;
+    padding: 1.5rem 0;
   }
 
-  .image-1 {
-    top: 5%;
-    left: 10%;
-    width: 120px;
-    height: 120px;
+  .images-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
   }
 
-  .image-2 {
-    top: 10%;
-    right: 5%;
-    width: 140px;
-    height: 140px;
-  }
-
-  .image-3 {
-    bottom: 10%;
-    left: 25%;
-    width: 110px;
-    height: 110px;
+  .image-circle {
+    position: static;
+    width: 140px !important;
+    height: 140px !important;
+    animation: none !important;
+    margin: 0.5rem;
   }
 }
 
-@media (max-width: 480px) {
-  .hero-container {
-    padding: 0 1rem;
-  }
-
+@media (max-width: 600px) {
   .hero-title h1 {
-    font-size: 1.8rem;
+    font-size: 2.5rem;
+    line-height: 1.3;
   }
 
   .tag {
-    padding: 0.5rem 1rem;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    padding: 0.5rem 0.9rem;
+  }
+
+  .contact-button {
+    font-size: 0.85rem;
+    padding: 0.6rem 1rem;
   }
 
   .contact-item {
     font-size: 1rem;
+    flex-direction: row;
+    justify-content: center;
   }
 
-  .hero-visual {
-    height: 300px;
+  .image-circle {
+    width: 110px !important;
+    height: 110px !important;
   }
 
-  .image-1,
-  .image-2,
-  .image-3 {
-    width: 100px;
-    height: 100px;
-  }
-
-  .image-2 {
-    width: 120px;
-    height: 120px;
+  .hero {
+    height: auto;
+    padding-bottom: 3rem;
   }
 }
 </style>
