@@ -1,523 +1,1515 @@
 <template>
- <div class="producto-container">
-  <div class="page-header">
-   <h1>🚀 MÓDULO PRODUCTO</h1>
-   <p>Gestión de productos y desarrollo de FODISERVICES</p>
+  <div class="producto-container">
+    <div class="page-header">
+      <h1>🚀 MÓDULO PRODUCTO</h1>
+      <p>Gestión de productos y desarrollo de FODISERVICES</p>
+    </div>
+
+    <!-- Sección de Ingreso de Productos - Layout Horizontal -->
+    <div class="product-entry-section">
+      <div class="horizontal-layout">
+        <!-- Formulario de Ingreso -->
+        <div class="entry-form-card">
+          <h3>Ingresar Producto</h3>
+          <form @submit.prevent="addProduct" class="product-form">
+            <div class="form-group">
+              <label for="productType">Tipo de Producto:</label>
+              <select v-model="newProduct.type" id="productType" required>
+                <option value="">Selecciona tipo</option>
+                <option value="toma">Toma doble</option>
+                <option value="doble">Doble</option>
+                <option value="fulcro_fijo">Fulcro y Fijo</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="quantity">Cantidad:</label>
+              <input type="number" v-model.number="newProduct.quantity" id="quantity" min="1" required />
+            </div>
+
+            <div class="form-group">
+              <label for="entryDate">Fecha de Ingreso:</label>
+              <input type="date" v-model="newProduct.entryDate" id="entryDate" :max="maxDate" required />
+            </div>
+
+            <div class="form-group">
+              <label for="shift">Turno:</label>
+              <select v-model="newProduct.shift" id="shift" required>
+                <option value="">Selecciona turno</option>
+                <option value="am">AM (Mañana)</option>
+                <option value="pm">PM (Tarde)</option>
+              </select>
+            </div>
+
+            <button type="submit" class="submit-btn">Agregar Producto</button>
+          </form>
+        </div>
+
+        <!-- Gráfico con Métricas Integradas -->
+        <div class="chart-section">
+          <h3>Gráfico de Producción Mensual</h3>
+
+          <div class="chart-layout">
+            <!-- Gráfico principal a la izquierda -->
+            <div class="chart-container">
+              <canvas ref="chartCanvas" width="800" height="340" class="chart-canvas" @mousemove="handleChartMouseMove"
+                @mouseleave="handleChartMouseLeave">
+              </canvas>
+              <!-- Tooltip para mostrar información del día -->
+              <div v-if="tooltip.visible" class="chart-tooltip" :class="{ visible: tooltip.visible }" :style="{
+                left: tooltip.x + 'px',
+                top: tooltip.y + 'px'
+              }">
+                <div class="tooltip-content">
+                  <div class="tooltip-date">{{ tooltip.date }}</div>
+                  <div class="tooltip-value">{{ tooltip.value }} unidades</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Métricas al lado derecho -->
+            <div class="chart-metrics-sidebar">
+              <div class="chart-metric-item">
+                <div class="chart-metric-icon">🎯</div>
+                <div class="chart-metric-content">
+                  <span class="chart-metric-value">{{ monthlyGoal }}</span>
+                  <span class="chart-metric-label">Meta del Mes</span>
+                </div>
+              </div>
+
+              <div class="chart-metric-item">
+                <div class="chart-metric-icon">📊</div>
+                <div class="chart-metric-content">
+                  <span class="chart-metric-value">{{ monthlyTotal }}</span>
+                  <span class="chart-metric-label">Unidades del Mes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="card-header">
+            <h3>💼 Productos Activos</h3>
+          </div>
+          <div class="card-content">
+            <div class="metric">
+              <span class="value">12</span>
+              <span class="label">En producción</span>
+            </div>
+            <div class="product-indicator active"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>🔬 En Desarrollo</h3>
+          </div>
+          <div class="card-content">
+            <div class="metric">
+              <span class="value">5</span>
+              <span class="label">Proyectos</span>
+            </div>
+            <div class="product-indicator development"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>📊 Market Share</h3>
+          </div>
+          <div class="card-content">
+            <div class="metric">
+              <span class="value">23%</span>
+              <span class="label">Participación</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" style="width: 23%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>⭐ Satisfacción</h3>
+          </div>
+          <div class="card-content">
+            <div class="metric">
+              <span class="value">4.8</span>
+              <span class="label">Rating promedio</span>
+            </div>
+            <div class="stars">
+              <span>⭐⭐⭐⭐⭐</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="products-section">
+        <div class="products-card">
+          <h3>🏆 Productos Destacados</h3>
+          <div class="product-list">
+            <div class="product-item">
+              <div class="product-icon">💻</div>
+              <div class="product-info">
+                <h4>FODISERVICES ERP</h4>
+                <p>Sistema integral de gestión empresarial</p>
+                <div class="product-tags">
+                  <span class="tag">Enterprise</span>
+                  <span class="tag">Cloud</span>
+                  <span class="tag">AI-Powered</span>
+                </div>
+                <div class="product-status active">Activo</div>
+              </div>
+              <div class="product-metrics">
+                <span class="metric-value">150+</span>
+                <span class="metric-label">Clientes</span>
+              </div>
+            </div>
+
+            <div class="product-item">
+              <div class="product-icon">📱</div>
+              <div class="product-info">
+                <h4>FODI Mobile Suite</h4>
+                <p>Aplicaciones móviles corporativas</p>
+                <div class="product-tags">
+                  <span class="tag">Mobile</span>
+                  <span class="tag">Cross-Platform</span>
+                </div>
+                <div class="product-status development">En Desarrollo</div>
+              </div>
+              <div class="product-metrics">
+                <span class="metric-value">75%</span>
+                <span class="metric-label">Progreso</span>
+              </div>
+            </div>
+
+            <div class="product-item">
+              <div class="product-icon">🔒</div>
+              <div class="product-info">
+                <h4>FODI Security</h4>
+                <p>Suite de seguridad cibernética</p>
+                <div class="product-tags">
+                  <span class="tag">Security</span>
+                  <span class="tag">Blockchain</span>
+                </div>
+                <div class="product-status active">Activo</div>
+              </div>
+              <div class="product-metrics">
+                <span class="metric-value">98.9%</span>
+                <span class="metric-label">Efectividad</span>
+              </div>
+            </div>
+
+            <div class="product-item">
+              <div class="product-icon">🤖</div>
+              <div class="product-info">
+                <h4>FODI AI Assistant</h4>
+                <p>Asistente inteligente para empresas</p>
+                <div class="product-tags">
+                  <span class="tag">AI</span>
+                  <span class="tag">Machine Learning</span>
+                </div>
+                <div class="product-status beta">Beta</div>
+              </div>
+              <div class="product-metrics">
+                <span class="metric-value">Beta</span>
+                <span class="metric-label">Fase</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="roadmap-card">
+          <h3>🗺️ Roadmap de Productos</h3>
+          <div class="roadmap-timeline">
+            <div class="timeline-item completed">
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <h4>Q1 2025</h4>
+                <p>Lanzamiento FODI ERP v3.0</p>
+              </div>
+            </div>
+
+            <div class="timeline-item active">
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <h4>Q2 2025</h4>
+                <p>FODI Mobile Suite Beta</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <h4>Q3 2025</h4>
+                <p>AI Assistant Release</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <h4>Q4 2025</h4>
+                <p>FODI Security v2.0</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="dashboard-grid">
-   <div class="card">
-    <div class="card-header">
-     <h3>💼 Productos Activos</h3>
-    </div>
-    <div class="card-content">
-     <div class="metric">
-      <span class="value">12</span>
-      <span class="label">En producción</span>
-     </div>
-     <div class="product-indicator active"></div>
-    </div>
-   </div>
-
-   <div class="card">
-    <div class="card-header">
-     <h3>🔬 En Desarrollo</h3>
-    </div>
-    <div class="card-content">
-     <div class="metric">
-      <span class="value">5</span>
-      <span class="label">Proyectos</span>
-     </div>
-     <div class="product-indicator development"></div>
-    </div>
-   </div>
-
-   <div class="card">
-    <div class="card-header">
-     <h3>📊 Market Share</h3>
-    </div>
-    <div class="card-content">
-     <div class="metric">
-      <span class="value">23%</span>
-      <span class="label">Participación</span>
-     </div>
-     <div class="progress-bar">
-      <div class="progress" style="width: 23%"></div>
-     </div>
-    </div>
-   </div>
-
-   <div class="card">
-    <div class="card-header">
-     <h3>⭐ Satisfacción</h3>
-    </div>
-    <div class="card-content">
-     <div class="metric">
-      <span class="value">4.8</span>
-      <span class="label">Rating promedio</span>
-     </div>
-     <div class="stars">
-      <span>⭐⭐⭐⭐⭐</span>
-     </div>
-    </div>
-   </div>
-  </div>
-
-  <div class="products-section">
-   <div class="products-card">
-    <h3>🏆 Productos Destacados</h3>
-    <div class="product-list">
-     <div class="product-item">
-      <div class="product-icon">💻</div>
-      <div class="product-info">
-       <h4>FODISERVICES ERP</h4>
-       <p>Sistema integral de gestión empresarial</p>
-       <div class="product-tags">
-        <span class="tag">Enterprise</span>
-        <span class="tag">Cloud</span>
-        <span class="tag">AI-Powered</span>
-       </div>
-       <div class="product-status active">Activo</div>
-      </div>
-      <div class="product-metrics">
-       <span class="metric-value">150+</span>
-       <span class="metric-label">Clientes</span>
-      </div>
-     </div>
-
-     <div class="product-item">
-      <div class="product-icon">📱</div>
-      <div class="product-info">
-       <h4>FODI Mobile Suite</h4>
-       <p>Aplicaciones móviles corporativas</p>
-       <div class="product-tags">
-        <span class="tag">Mobile</span>
-        <span class="tag">Cross-Platform</span>
-       </div>
-       <div class="product-status development">En Desarrollo</div>
-      </div>
-      <div class="product-metrics">
-       <span class="metric-value">75%</span>
-       <span class="metric-label">Progreso</span>
-      </div>
-     </div>
-
-     <div class="product-item">
-      <div class="product-icon">🔒</div>
-      <div class="product-info">
-       <h4>FODI Security</h4>
-       <p>Suite de seguridad cibernética</p>
-       <div class="product-tags">
-        <span class="tag">Security</span>
-        <span class="tag">Blockchain</span>
-       </div>
-       <div class="product-status active">Activo</div>
-      </div>
-      <div class="product-metrics">
-       <span class="metric-value">98.9%</span>
-       <span class="metric-label">Efectividad</span>
-      </div>
-     </div>
-
-     <div class="product-item">
-      <div class="product-icon">🤖</div>
-      <div class="product-info">
-       <h4>FODI AI Assistant</h4>
-       <p>Asistente inteligente para empresas</p>
-       <div class="product-tags">
-        <span class="tag">AI</span>
-        <span class="tag">Machine Learning</span>
-       </div>
-       <div class="product-status beta">Beta</div>
-      </div>
-      <div class="product-metrics">
-       <span class="metric-value">Beta</span>
-       <span class="metric-label">Fase</span>
-      </div>
-     </div>
-    </div>
-   </div>
-
-   <div class="roadmap-card">
-    <h3>🗺️ Roadmap de Productos</h3>
-    <div class="roadmap-timeline">
-     <div class="timeline-item completed">
-      <div class="timeline-marker"></div>
-      <div class="timeline-content">
-       <h4>Q1 2025</h4>
-       <p>Lanzamiento FODI ERP v3.0</p>
-      </div>
-     </div>
-
-     <div class="timeline-item active">
-      <div class="timeline-marker"></div>
-      <div class="timeline-content">
-       <h4>Q2 2025</h4>
-       <p>FODI Mobile Suite Beta</p>
-      </div>
-     </div>
-
-     <div class="timeline-item">
-      <div class="timeline-marker"></div>
-      <div class="timeline-content">
-       <h4>Q3 2025</h4>
-       <p>AI Assistant Release</p>
-      </div>
-     </div>
-
-     <div class="timeline-item">
-      <div class="timeline-marker"></div>
-      <div class="timeline-content">
-       <h4>Q4 2025</h4>
-       <p>FODI Security v2.0</p>
-      </div>
-     </div>
-    </div>
-   </div>
-  </div>
- </div>
 </template>
 
 <script setup lang="ts">
+import { ref, reactive, computed, onMounted, nextTick } from 'vue'
+
 defineOptions({
- name: 'ProductoView',
+  name: 'ProductoView',
 });
+
+// Product entry form data
+const newProduct = reactive({
+  type: '',
+  quantity: 1,
+  entryDate: new Date().toISOString().split('T')[0], // Fecha de hoy por defecto
+  shift: ''
+})
+
+// Product entries storage
+const productEntries = ref<Array<{
+  id: number
+  type: string
+  quantity: number
+  entryDate: string
+  shift: string
+  day: number
+}>>([])
+
+// Mock data para demo - Días laborales de Julio 2025 (Lunes a Sábado)
+const mockData = [
+  // Semana 1
+  { id: 1, type: 'toma', quantity: 45, entryDate: '2025-07-01', shift: 'am', day: 1 }, // Martes
+  { id: 2, type: 'doble', quantity: 38, entryDate: '2025-07-02', shift: 'pm', day: 2 }, // Miércoles
+  { id: 3, type: 'fulcro_fijo', quantity: 42, entryDate: '2025-07-03', shift: 'am', day: 3 }, // Jueves
+  { id: 4, type: 'toma', quantity: 35, entryDate: '2025-07-04', shift: 'pm', day: 4 }, // Viernes
+  { id: 5, type: 'doble', quantity: 48, entryDate: '2025-07-05', shift: 'am', day: 5 }, // Sábado
+  // Semana 2
+  { id: 6, type: 'fulcro_fijo', quantity: 52, entryDate: '2025-07-07', shift: 'am', day: 7 }, // Lunes
+  { id: 7, type: 'toma', quantity: 44, entryDate: '2025-07-08', shift: 'pm', day: 8 }, // Martes
+  { id: 8, type: 'doble', quantity: 39, entryDate: '2025-07-09', shift: 'am', day: 9 }, // Miércoles
+  { id: 9, type: 'fulcro_fijo', quantity: 46, entryDate: '2025-07-10', shift: 'pm', day: 10 }, // Jueves
+  { id: 10, type: 'toma', quantity: 41, entryDate: '2025-07-11', shift: 'am', day: 11 }, // Viernes
+  { id: 11, type: 'doble', quantity: 37, entryDate: '2025-07-12', shift: 'pm', day: 12 }, // Sábado
+  // Semana 3
+  { id: 12, type: 'fulcro_fijo', quantity: 49, entryDate: '2025-07-14', shift: 'am', day: 14 }, // Lunes
+  { id: 13, type: 'toma', quantity: 43, entryDate: '2025-07-15', shift: 'pm', day: 15 }, // Martes
+  { id: 14, type: 'doble', quantity: 40, entryDate: '2025-07-16', shift: 'am', day: 16 }, // Miércoles
+  { id: 15, type: 'fulcro_fijo', quantity: 47, entryDate: '2025-07-17', shift: 'pm', day: 17 }, // Jueves
+  { id: 16, type: 'toma', quantity: 45, entryDate: '2025-07-18', shift: 'am', day: 18 }, // Viernes
+  { id: 17, type: 'doble', quantity: 42, entryDate: '2025-07-19', shift: 'pm', day: 19 }, // Sábado
+  // Semana 4
+  { id: 18, type: 'fulcro_fijo', quantity: 51, entryDate: '2025-07-21', shift: 'am', day: 21 }, // Lunes
+  { id: 19, type: 'toma', quantity: 46, entryDate: '2025-07-22', shift: 'pm', day: 22 }, // Martes
+  { id: 20, type: 'doble', quantity: 38, entryDate: '2025-07-23', shift: 'am', day: 23 }, // Miércoles
+  { id: 21, type: 'fulcro_fijo', quantity: 44, entryDate: '2025-07-24', shift: 'pm', day: 24 }, // Jueves
+  { id: 22, type: 'toma', quantity: 50, entryDate: '2025-07-25', shift: 'am', day: 25 }, // Viernes
+  { id: 23, type: 'doble', quantity: 43, entryDate: '2025-07-26', shift: 'pm', day: 26 }, // Sábado
+  // Semana 5
+  { id: 24, type: 'fulcro_fijo', quantity: 48, entryDate: '2025-07-28', shift: 'am', day: 28 }, // Lunes
+  { id: 25, type: 'toma', quantity: 41, entryDate: '2025-07-29', shift: 'pm', day: 29 }, // Martes
+  { id: 26, type: 'doble', quantity: 45, entryDate: '2025-07-30', shift: 'am', day: 30 }, // Miércoles
+]
+
+// Chart reference
+const chartCanvas = ref<HTMLCanvasElement | null>(null)
+
+// Tooltip state
+const tooltip = reactive({
+  visible: false,
+  x: 0,
+  y: 0,
+  day: 0,
+  value: 0,
+  date: ''
+})
+
+// Chart interaction state
+const chartData = ref<number[]>([])
+const hoveredPoint = ref(-1)
+
+// Current date for max date validation
+const maxDate = computed(() => {
+  const today = new Date()
+  return today.toISOString().split('T')[0]
+})
+
+// Monthly goal
+const monthlyGoal = ref(1000)
+
+// Calculate monthly total
+const monthlyTotal = computed(() => {
+  const currentMonth = new Date().getMonth()
+  const currentYear = new Date().getFullYear()
+
+  return productEntries.value
+    .filter(entry => {
+      const entryDate = new Date(entry.entryDate)
+      return entryDate.getMonth() === currentMonth && entryDate.getFullYear() === currentYear
+    })
+    .reduce((total, entry) => total + entry.quantity, 0)
+})
+
+// Get current month days data for chart
+const getMonthlyData = () => {
+  const currentDate = new Date()
+  const currentMonth = currentDate.getMonth()
+  const currentYear = currentDate.getFullYear()
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate()
+
+  const dailyData = Array(daysInMonth).fill(0)
+
+  productEntries.value
+    .filter(entry => {
+      const entryDate = new Date(entry.entryDate)
+      return entryDate.getMonth() === currentMonth && entryDate.getFullYear() === currentYear
+    })
+    .forEach(entry => {
+      const day = entry.day - 1 // Convert to 0-based index
+      if (day >= 0 && day < daysInMonth) {
+        dailyData[day] += entry.quantity
+      }
+    })
+
+  return dailyData
+}
+
+// Add new product
+const addProduct = () => {
+  if (!newProduct.type || !newProduct.quantity || !newProduct.entryDate || !newProduct.shift) {
+    alert('Por favor completa todos los campos')
+    return
+  }
+
+  const entryDate = new Date(newProduct.entryDate)
+  const day = entryDate.getDate()
+
+  const entry = {
+    id: Date.now(),
+    type: newProduct.type,
+    quantity: newProduct.quantity,
+    entryDate: newProduct.entryDate,
+    shift: newProduct.shift,
+    day: day
+  }
+
+  productEntries.value.push(entry)
+
+  // Reset form pero mantener la fecha
+  const currentDate = newProduct.entryDate
+  newProduct.type = ''
+  newProduct.quantity = 1
+  newProduct.entryDate = currentDate
+  newProduct.shift = ''
+
+  // Redraw chart
+  nextTick(() => {
+    drawChart()
+  })
+}
+
+// Handle chart mouse interactions
+const handleChartMouseMove = (event: MouseEvent) => {
+  if (!chartCanvas.value) return
+
+  const canvas = chartCanvas.value
+  const rect = canvas.getBoundingClientRect()
+  const x = event.clientX - rect.left
+  const y = event.clientY - rect.top
+
+  const padding = 70
+  const chartWidth = canvas.width - 2 * padding
+  const data = chartData.value
+
+  if (data.length === 0) return
+
+  // Calcular el día más cercano basado en la posición del mouse
+  const relativeX = x - padding
+  if (relativeX >= 0 && relativeX <= chartWidth) {
+    const dayIndex = Math.round((relativeX / chartWidth) * (data.length - 1))
+
+    if (dayIndex >= 0 && dayIndex < data.length) {
+      const pointX = padding + (dayIndex / (data.length - 1)) * chartWidth
+      const distance = Math.abs(x - pointX)
+
+      // Solo mostrar tooltip si el mouse está cerca del punto (dentro de 20px)
+      if (distance <= 20) {
+        hoveredPoint.value = dayIndex
+        tooltip.visible = true
+        tooltip.x = rect.left + pointX + 10
+        tooltip.y = rect.top + y - 50
+        tooltip.day = dayIndex + 1
+        tooltip.value = data[dayIndex]
+
+        // Crear fecha formateada (4 de Julio)
+        const monthNames = [
+          'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+          'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+        ]
+        const currentDate = new Date()
+        const currentMonth = monthNames[currentDate.getMonth()]
+        tooltip.date = `${tooltip.day} de ${currentMonth}`
+
+        // Redibujar gráfico con punto resaltado
+        drawChart()
+        return
+      }
+    }
+  }
+
+  // Si no está cerca de ningún punto, ocultar tooltip
+  if (hoveredPoint.value !== -1) {
+    hoveredPoint.value = -1
+    tooltip.visible = false
+    drawChart()
+  }
+}
+
+const handleChartMouseLeave = () => {
+  tooltip.visible = false
+  hoveredPoint.value = -1
+  drawChart()
+}
+
+// Draw chart function
+const drawChart = () => {
+  if (!chartCanvas.value) return
+
+  const canvas = chartCanvas.value
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return
+
+  // Clear canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+  // Detect theme colors
+  const isDarkTheme = document.documentElement.getAttribute('data-theme') === 'dark' ||
+    document.documentElement.getAttribute('data-theme') === null || // Default to dark if no theme set
+    document.documentElement.classList.contains('dark-theme') ||
+    document.body.classList.contains('dark-theme')
+
+  const colors = {
+    grid: isDarkTheme ? '#444' : '#e0e0e0',
+    axis: isDarkTheme ? '#fff' : '#333',
+    line: '#FFA500',
+    points: isDarkTheme ? '#FFA500' : '#031633',
+    highlightPoint: '#FF6B35',
+    text: isDarkTheme ? '#fff' : '#666',
+    title: isDarkTheme ? '#fff' : '#031633'
+  }
+
+  const data = getMonthlyData()
+  chartData.value = data // Almacenar datos para interactividad
+  const maxValue = Math.max(...data, 50) // Minimum scale of 50
+  const padding = 70
+  const chartWidth = canvas.width - 2 * padding
+  const chartHeight = canvas.height - 2 * padding
+
+  // Draw grid
+  ctx.strokeStyle = colors.grid
+  ctx.lineWidth = 1
+
+  // Vertical grid lines (days) - mostrar más líneas para mejor referencia
+  for (let i = 0; i <= data.length; i += 1) {
+    const x = padding + (i / data.length) * chartWidth
+    ctx.beginPath()
+    ctx.moveTo(x, padding)
+    ctx.lineTo(x, padding + chartHeight)
+    ctx.globalAlpha = i % 5 === 0 ? 0.6 : 0.2 // Líneas principales más visibles
+    ctx.stroke()
+    ctx.globalAlpha = 1
+  }
+
+  // Horizontal grid lines (quantities)
+  for (let i = 0; i <= 5; i++) {
+    const y = padding + (i / 5) * chartHeight
+    ctx.beginPath()
+    ctx.moveTo(padding, y)
+    ctx.lineTo(padding + chartWidth, y)
+    ctx.stroke()
+  }
+
+  // Draw axes
+  ctx.strokeStyle = colors.axis
+  ctx.lineWidth = 2
+  ctx.beginPath()
+  ctx.moveTo(padding, padding)
+  ctx.lineTo(padding, padding + chartHeight)
+  ctx.lineTo(padding + chartWidth, padding + chartHeight)
+  ctx.stroke()
+
+  // Draw data line
+  if (data.some(value => value > 0)) {
+    ctx.strokeStyle = colors.line
+    ctx.lineWidth = 3
+    ctx.beginPath()
+
+    let firstPoint = true
+    data.forEach((value, index) => {
+      const x = padding + (index / (data.length - 1)) * chartWidth
+      const y = padding + chartHeight - (value / maxValue) * chartHeight
+
+      if (firstPoint) {
+        ctx.moveTo(x, y)
+        firstPoint = false
+      } else {
+        ctx.lineTo(x, y)
+      }
+    })
+
+    ctx.stroke()
+
+    // Draw data points
+    data.forEach((value, index) => {
+      const x = padding + (index / (data.length - 1)) * chartWidth
+      const y = padding + chartHeight - (value / maxValue) * chartHeight
+
+      // Punto normal o resaltado
+      const isHovered = index === hoveredPoint.value
+      ctx.fillStyle = isHovered ? colors.highlightPoint : colors.points
+
+      ctx.beginPath()
+      ctx.arc(x, y, isHovered ? 6 : 4, 0, Math.PI * 2)
+      ctx.fill()
+
+      // Agregar un anillo alrededor del punto hover
+      if (isHovered) {
+        ctx.strokeStyle = colors.highlightPoint
+        ctx.lineWidth = 2
+        ctx.beginPath()
+        ctx.arc(x, y, 10, 0, Math.PI * 2)
+        ctx.stroke()
+      }
+    })
+  }
+
+  // Draw labels
+  ctx.fillStyle = colors.text
+  ctx.font = '11px "Montserrat", sans-serif'
+  ctx.textAlign = 'center'
+
+  // X-axis labels (days) - mostrar más días para mejor referencia
+  for (let i = 0; i < data.length; i += 3) { // Mostrar cada 3 días
+    const x = padding + (i / (data.length - 1)) * chartWidth
+    ctx.fillText((i + 1).toString(), x, padding + chartHeight + 20)
+  }
+
+  // Mostrar también el último día
+  if (data.length > 1) {
+    const lastIndex = data.length - 1
+    const x = padding + (lastIndex / (data.length - 1)) * chartWidth
+    ctx.fillText((lastIndex + 1).toString(), x, padding + chartHeight + 20)
+  }
+
+  // Y-axis labels (quantities)
+  ctx.textAlign = 'right'
+  for (let i = 0; i <= 5; i++) {
+    const y = padding + (i / 5) * chartHeight + 4
+    const value = Math.round(maxValue * (5 - i) / 5)
+    ctx.fillText(value.toString(), padding - 10, y)
+  }
+
+  // Chart title
+  ctx.fillStyle = colors.title
+  ctx.font = 'bold 18px "Montserrat", sans-serif'
+  ctx.textAlign = 'center'
+  ctx.fillText('Unidades de Producción Diaria', canvas.width / 2, 30)
+
+  // Axis labels
+  ctx.font = '14px "Montserrat", sans-serif'
+
+  // X-axis label con mes actual
+  const monthNames = [
+    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+  ]
+  const currentDate = new Date()
+  const currentMonth = monthNames[currentDate.getMonth()]
+  ctx.fillText(`Días del mes de ${currentMonth}`, canvas.width / 2, canvas.height - 10)
+
+  // Y-axis label con mejor estilo
+  ctx.save()
+  ctx.translate(25, canvas.height / 2)
+  ctx.rotate(-Math.PI / 2)
+  ctx.font = 'bold 13px "Montserrat", sans-serif'
+  ctx.fillStyle = colors.text
+  ctx.textAlign = 'center'
+  ctx.fillText('Cantidad de Unidades', 0, 0)
+  ctx.restore()
+}
+
+// Initialize date to today
+onMounted(() => {
+  newProduct.entryDate = maxDate.value
+  // Cargar datos mock para demo
+  productEntries.value = [...mockData]
+  nextTick(() => {
+    drawChart()
+  })
+
+  // Listen for theme changes
+  const observer = new MutationObserver(() => {
+    nextTick(() => {
+      drawChart()
+    })
+  })
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme']
+  })
+})
 </script>
 
 <style scoped>
 .producto-container {
- padding: 2rem;
- padding-top: 80px;
- /* Offset para navbar fija */
- background-color: #f8f9fa;
- min-height: 100vh;
- font-family: 'Montserrat', sans-serif;
+  padding: 2rem;
+  padding-top: 80px;
+  /* Offset para navbar fija */
+  background-color: var(--bg-color, #f8f9fa);
+  color: var(--text-color, #031633);
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .page-header {
- text-align: center;
- margin-bottom: 3rem;
+  text-align: center;
+  margin-bottom: 3rem;
 }
 
 .page-header h1 {
- color: #031633;
- font-size: 2.5rem;
- font-weight: 800;
- margin-bottom: 0.5rem;
+  color: var(--text-color, #031633);
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
 }
 
 .page-header p {
- color: #666;
- font-size: 1.1rem;
+  color: var(--text-secondary, #6c757d);
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+/* Product Entry Section Styles */
+.product-entry-section {
+  margin-bottom: 3rem;
+}
+
+.section-title h2 {
+  color: var(--text-color, #031633);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Horizontal Layout */
+.horizontal-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.5rem;
+  align-items: start;
+  margin-bottom: 2rem;
+}
+
+.entry-form-card {
+  background: var(--bg-color, white);
+  color: var(--text-color, #031633);
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(3, 22, 51, 0.1);
+  border: 1px solid rgba(255, 165, 0, 0.2);
+  min-width: 300px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.entry-form-card h3 {
+  color: var(--text-color, #031633);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  color: var(--text-color, #031633);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.form-group select,
+.form-group input {
+  padding: 0.5rem;
+  border: 2px solid var(--border-color, #e0e6ed);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: border-color 0.3s ease;
+  background-color: var(--bg-color, white);
+  color: var(--text-color, #031633);
+}
+
+.form-group select:focus,
+.form-group input:focus {
+  outline: none;
+  border-color: #FFA500;
+  box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.1);
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.submit-btn:hover {
+  background: linear-gradient(135deg, #FF8C00 0%, #FF7F00 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3);
+}
+
+.metrics-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 200px;
+}
+
+.metric-card {
+  background: var(--bg-color, white);
+  color: var(--text-color, #031633);
+  border-radius: 15px;
+  padding: 1rem;
+  box-shadow: 0 8px 32px rgba(3, 22, 51, 0.1);
+  border: 1px solid rgba(255, 165, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.metric-icon {
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.metric-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-value {
+  color: var(--text-color, #031633);
+  font-size: 1.4rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.metric-label {
+  color: var(--text-secondary, #6c757d);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.chart-section {
+  background: var(--bg-color, white);
+  color: var(--text-color, #031633);
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(3, 22, 51, 0.1);
+  border: 1px solid rgba(255, 165, 0, 0.2);
+  min-width: 400px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.chart-section h3 {
+  color: var(--text-color, #031633);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.chart-layout {
+  display: grid !important;
+  /* Forzar grid layout */
+  grid-template-columns: 1fr auto !important;
+  /* Gráfico a la izquierda, métricas a la derecha */
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.chart-metrics-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 180px;
+  margin-top: 0;
+  grid-column: 2;
+  /* Asegurar que esté en la segunda columna */
+  /* Eliminar margen superior */
+}
+
+.chart-metrics {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.chart-metric-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--card-bg, rgba(255, 165, 0, 0.1));
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 165, 0, 0.2);
+  box-shadow: 0 4px 16px rgba(3, 22, 51, 0.1);
+  transition: all 0.3s ease;
+}
+
+.chart-metric-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(3, 22, 51, 0.15);
+}
+
+.chart-metric-icon {
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+}
+
+.chart-metric-content {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.chart-metric-value {
+  color: var(--text-color, #031633);
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.chart-metric-label {
+  color: var(--text-secondary, #6c757d);
+  font-size: 0.8rem;
+  font-weight: 500;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-color, white);
+  border-radius: 12px;
+  padding: 1rem;
+  border: 1px solid rgba(255, 165, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(3, 22, 51, 0.05);
+  grid-column: 1;
+  /* Asegurar que esté en la primera columna */
+}
+
+.chart-container canvas {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .horizontal-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .chart-layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .chart-metrics-sidebar {
+    flex-direction: row;
+    justify-content: space-around;
+    min-width: 100%;
+    gap: 0.75rem;
+  }
+
+  .chart-section {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .chart-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-metrics-sidebar {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .chart-container canvas {
+    width: 100%;
+    height: 300px;
+  }
+
+  .entry-form-card,
+  .chart-section {
+    padding: 1rem;
+    min-width: 100%;
+  }
+
+  .horizontal-layout {
+    gap: 1rem;
+  }
+
+  .chart-metric-item {
+    padding: 0.75rem;
+  }
+
+  .chart-metric-value {
+    font-size: 1.2rem;
+  }
+}
+
+.page-header p {
+  color: var(--text-secondary, #666);
+  font-size: 1.1rem;
 }
 
 .dashboard-grid {
- display: grid;
- grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
- gap: 2rem;
- margin-bottom: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
 }
 
 .card {
- background: white;
- border-radius: 12px;
- box-shadow: 0 4px 16px rgba(3, 22, 51, 0.1);
- overflow: hidden;
- transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: var(--bg-color, white);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(3, 22, 51, 0.1);
+  border: 1px solid rgba(255, 165, 0, 0.15);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 .card:hover {
- transform: translateY(-4px);
- box-shadow: 0 8px 32px rgba(3, 22, 51, 0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(3, 22, 51, 0.2);
+  border-color: rgba(255, 165, 0, 0.3);
 }
 
 .card-header {
- background: linear-gradient(135deg, #031633 0%, #0a2a5c 100%);
- color: white;
- padding: 1.5rem;
+  background: linear-gradient(135deg, #031633 0%, #0a2a5c 100%);
+  color: white;
+  padding: 1.5rem;
 }
 
 .card-header h3 {
- margin: 0;
- font-size: 1.2rem;
- font-weight: 700;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
 .card-content {
- padding: 2rem;
- position: relative;
+  padding: 2rem;
+  position: relative;
 }
 
 .metric {
- text-align: center;
- margin-bottom: 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 .value {
- display: block;
- font-size: 2rem;
- font-weight: 800;
- color: #031633;
- margin-bottom: 0.5rem;
+  display: block;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-color, #031633);
+  margin-bottom: 0.5rem;
 }
 
 .label {
- color: #666;
- font-size: 0.9rem;
- text-transform: uppercase;
- letter-spacing: 0.5px;
+  color: var(--text-secondary, #666);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .product-indicator {
- width: 12px;
- height: 12px;
- border-radius: 50%;
- position: absolute;
- top: 1rem;
- right: 1rem;
- animation: pulse 2s infinite;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  animation: pulse 2s infinite;
 }
 
 .product-indicator.active {
- background-color: #28a745;
+  background-color: #28a745;
 }
 
 .product-indicator.development {
- background-color: #FFA500;
+  background-color: #FFA500;
 }
 
 .progress-bar {
- width: 100%;
- height: 8px;
- background-color: #e9ecef;
- border-radius: 4px;
- overflow: hidden;
+  width: 100%;
+  height: 8px;
+  background-color: var(--border-color, #e9ecef);
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .progress {
- height: 100%;
- background: linear-gradient(90deg, #FFA500 0%, #FFB733 100%);
- border-radius: 4px;
- transition: width 0.5s ease;
+  height: 100%;
+  background: linear-gradient(90deg, #FFA500 0%, #FFB733 100%);
+  border-radius: 4px;
+  transition: width 0.5s ease;
 }
 
 .stars {
- text-align: center;
- font-size: 1.2rem;
+  text-align: center;
+  font-size: 1.2rem;
 }
 
 .products-section {
- display: grid;
- grid-template-columns: 2fr 1fr;
- gap: 2rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
 }
 
 .products-card,
 .roadmap-card {
- background: white;
- border-radius: 12px;
- box-shadow: 0 4px 16px rgba(3, 22, 51, 0.1);
- padding: 2rem;
+  background: var(--bg-color, white);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(3, 22, 51, 0.1);
+  border: 1px solid rgba(255, 165, 0, 0.15);
+  padding: 2rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.products-card:hover,
+.roadmap-card:hover {
+  box-shadow: 0 12px 40px rgba(3, 22, 51, 0.15);
+  border-color: rgba(255, 165, 0, 0.25);
 }
 
 .products-card h3,
 .roadmap-card h3 {
- color: #031633;
- margin-bottom: 1.5rem;
- font-size: 1.3rem;
- font-weight: 700;
+  color: var(--text-color, #031633);
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: 700;
 }
 
 .product-list {
- display: flex;
- flex-direction: column;
- gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .product-item {
- display: grid;
- grid-template-columns: auto 1fr auto;
- gap: 1rem;
- padding: 1.5rem;
- border-radius: 8px;
- background-color: #f8f9fa;
- transition: all 0.3s ease;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background-color: var(--card-bg, #f8f9fa);
+  border: 1px solid rgba(255, 165, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(3, 22, 51, 0.05);
+  transition: all 0.3s ease;
 }
 
 .product-item:hover {
- background-color: #e9ecef;
- transform: translateY(-2px);
+  background-color: var(--card-hover-bg, #e9ecef);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(3, 22, 51, 0.1);
+  border-color: rgba(255, 165, 0, 0.2);
 }
 
 .product-icon {
- font-size: 2.5rem;
- width: 60px;
- text-align: center;
- align-self: center;
+  font-size: 2.5rem;
+  width: 60px;
+  text-align: center;
+  align-self: center;
 }
 
 .product-info h4 {
- margin: 0 0 0.5rem 0;
- color: #031633;
- font-size: 1.1rem;
- font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--text-color, #031633);
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .product-info p {
- margin: 0 0 1rem 0;
- color: #666;
- font-size: 0.9rem;
+  margin: 0 0 1rem 0;
+  color: var(--text-secondary, #666);
+  font-size: 0.9rem;
 }
 
 .product-tags {
- display: flex;
- gap: 0.5rem;
- flex-wrap: wrap;
- margin-bottom: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
 }
 
 .tag {
- background-color: #FFA500;
- color: white;
- padding: 0.2rem 0.6rem;
- border-radius: 12px;
- font-size: 0.7rem;
- font-weight: 600;
- text-transform: uppercase;
+  background-color: #FFA500;
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .product-status {
- display: inline-block;
- padding: 0.3rem 0.8rem;
- border-radius: 20px;
- font-size: 0.8rem;
- font-weight: 600;
- text-transform: uppercase;
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .product-status.active {
- background-color: #d4edda;
- color: #155724;
+  background-color: #d4edda;
+  color: #155724;
 }
 
 .product-status.development {
- background-color: #fff3cd;
- color: #856404;
+  background-color: #fff3cd;
+  color: #856404;
 }
 
 .product-status.beta {
- background-color: #d1ecf1;
- color: #0c5460;
+  background-color: #d1ecf1;
+  color: #0c5460;
 }
 
 .product-metrics {
- text-align: center;
- align-self: center;
+  text-align: center;
+  align-self: center;
 }
 
 .metric-value {
- display: block;
- font-size: 1.5rem;
- font-weight: 800;
- color: #031633;
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-color, #031633);
 }
 
 .metric-label {
- font-size: 0.8rem;
- color: #666;
- text-transform: uppercase;
+  font-size: 0.8rem;
+  color: var(--text-secondary, #666);
+  text-transform: uppercase;
 }
 
 .roadmap-timeline {
- position: relative;
+  position: relative;
 }
 
 .roadmap-timeline::before {
- content: '';
- position: absolute;
- left: 15px;
- top: 0;
- bottom: 0;
- width: 2px;
- background: linear-gradient(180deg, #FFA500 0%, #031633 100%);
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, #FFA500 0%, #031633 100%);
 }
 
 .timeline-item {
- position: relative;
- padding-left: 3rem;
- margin-bottom: 2rem;
+  position: relative;
+  padding-left: 3rem;
+  margin-bottom: 2rem;
 }
 
 .timeline-marker {
- position: absolute;
- left: 7px;
- top: 5px;
- width: 16px;
- height: 16px;
- border-radius: 50%;
- background-color: #e9ecef;
- border: 3px solid #fff;
- box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  left: 7px;
+  top: 5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--border-color, #e9ecef);
+  border: 3px solid var(--bg-color, #fff);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .timeline-item.completed .timeline-marker {
- background-color: #28a745;
+  background-color: #28a745;
 }
 
 .timeline-item.active .timeline-marker {
- background-color: #FFA500;
- animation: pulse 2s infinite;
+  background-color: #FFA500;
+  animation: pulse 2s infinite;
 }
 
 .timeline-content h4 {
- margin: 0 0 0.5rem 0;
- color: #031633;
- font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--text-color, #031633);
+  font-weight: 600;
 }
 
 .timeline-content p {
- margin: 0;
- color: #666;
- font-size: 0.9rem;
+  margin: 0;
+  color: var(--text-secondary, #666);
+  font-size: 0.9rem;
 }
 
 @keyframes pulse {
- 0% {
-  opacity: 1;
-  transform: scale(1);
- }
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
 
- 50% {
-  opacity: 0.7;
-  transform: scale(1.1);
- }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
 
- 100% {
-  opacity: 1;
-  transform: scale(1);
- }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @media (max-width: 768px) {
- .producto-container {
-  padding: 1rem;
- }
+  .producto-container {
+    padding: 1rem;
+  }
 
- .dashboard-grid {
-  grid-template-columns: 1fr;
- }
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
 
- .products-section {
-  grid-template-columns: 1fr;
- }
+  .products-section {
+    grid-template-columns: 1fr;
+  }
 
- .product-item {
-  grid-template-columns: 1fr;
-  text-align: center;
- }
+  .product-item {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
 
- .page-header h1 {
-  font-size: 2rem;
- }
+  .page-header h1 {
+    font-size: 2rem;
+  }
+}
+
+/* Enhanced Dashboard Grid - Equal Heights */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  align-items: stretch;
+  /* Forzar altura igual */
+}
+
+.dashboard-grid>.dashboard-card,
+.dashboard-grid>.chart-section {
+  display: flex;
+  flex-direction: column;
+  min-height: 350px;
+  /* Altura mínima consistente */
+}
+
+/* Enhanced Card Content Distribution */
+.dashboard-card .card-content,
+.chart-section .chart-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  /* Cambiar a row para layout horizontal */
+}
+
+/* Interactive Chart Styling */
+.chart-container {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
+}
+
+.chart-canvas {
+  border-radius: 8px;
+  cursor: crosshair;
+  transition: all 0.2s ease;
+  background: var(--chart-bg, rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+}
+
+.chart-canvas:hover {
+  filter: brightness(1.05);
+  border-color: var(--primary-color, #FFA500);
+  box-shadow: 0 0 10px var(--primary-glow, rgba(255, 165, 0, 0.3));
+}
+
+/* Tooltip Styling */
+.chart-tooltip {
+  position: fixed;
+  background: var(--tooltip-bg);
+  color: var(--tooltip-text);
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  pointer-events: none;
+  z-index: 1000;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--tooltip-border);
+  backdrop-filter: blur(8px);
+  transform: translate(-50%, -100%);
+  margin-top: -12px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.chart-tooltip.visible {
+  opacity: 1;
+  transform: translate(-50%, -100%) translateY(-4px);
+}
+
+.chart-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--tooltip-bg);
+}
+
+.tooltip-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tooltip-date {
+  font-weight: 600;
+  font-size: 12px;
+  color: #ffffff !important;
+  opacity: 0.9;
+}
+
+.tooltip-value {
+  font-weight: 700;
+  font-size: 14px;
+  color: #ffffff !important;
+}
+
+/* Chart Metrics Enhancement */
+.chart-metric-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--metric-bg, rgba(255, 255, 255, 0.05));
+  border-radius: 6px;
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  transition: all 0.2s ease;
+}
+
+.chart-metric-item:hover {
+  background: var(--metric-hover-bg, rgba(255, 255, 255, 0.08));
+  border-color: var(--primary-color, #FFA500);
+}
+
+.chart-metric-icon {
+  font-size: 18px;
+  opacity: 0.8;
+}
+
+/* Theme-specific variables */
+:root {
+  --tooltip-bg: rgba(0, 0, 0, 0.9);
+  --tooltip-text: #ffffff;
+  --tooltip-border: rgba(255, 255, 255, 0.2);
+  --chart-bg: rgba(255, 255, 255, 0.02);
+  --metric-bg: rgba(255, 255, 255, 0.05);
+  --metric-hover-bg: rgba(255, 255, 255, 0.08);
+  --primary-glow: rgba(255, 165, 0, 0.3);
+}
+
+[data-theme="light"] {
+  --tooltip-bg: rgba(50, 50, 50, 0.95);
+  --tooltip-text: #ffffff;
+  --tooltip-border: rgba(255, 255, 255, 0.1);
+  --chart-bg: rgba(0, 0, 0, 0.02);
+  --metric-bg: rgba(0, 0, 0, 0.03);
+  --metric-hover-bg: rgba(0, 0, 0, 0.05);
+  --primary-glow: rgba(255, 165, 0, 0.2);
+}
+
+[data-theme="dark"] {
+  --tooltip-bg: rgba(40, 40, 40, 0.95);
+  --tooltip-text: #ffffff;
+  --tooltip-border: rgba(255, 255, 255, 0.15);
+  --chart-bg: rgba(255, 255, 255, 0.02);
+  --metric-bg: rgba(255, 255, 255, 0.05);
+  --metric-hover-bg: rgba(255, 255, 255, 0.08);
+  --primary-glow: rgba(255, 165, 0, 0.4);
 }
 </style>

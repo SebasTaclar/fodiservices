@@ -32,14 +32,31 @@
 }
 
 /* Dark Theme Variables (Default) */
+:root {
+  /* Default theme - Dark */
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.9);
+  --border-color: rgba(255, 255, 255, 0.2);
+  --card-bg: rgba(255, 255, 255, 0.1);
+  --card-hover-bg: rgba(255, 255, 255, 0.15);
+}
+
 :root,
 :root[data-theme='dark'] {
   --bg-primary: #2d2d2d;
   --bg-secondary: rgba(255, 255, 255, 0.1);
   --bg-tertiary: rgba(255, 255, 255, 0.05);
 
-  --text-primary: #ffffff;
+  /* Component-specific variables */
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.9);
+  --border-color: rgba(255, 255, 255, 0.2);
+  --card-bg: rgba(255, 255, 255, 0.1);
+  --card-hover-bg: rgba(255, 255, 255, 0.15);
+
+  --text-primary: #ffffff;
   --text-muted: rgba(255, 255, 255, 0.7);
   --text-disabled: rgba(255, 255, 255, 0.3);
 
@@ -67,8 +84,15 @@
   --bg-secondary: #ffffff;
   --bg-tertiary: #ffffff;
 
+  /* Component-specific variables */
+  --bg-color: #ffffff;
+  --text-color: #031633;
+  --text-secondary: #6c757d;
+  --border-color: #e0e6ed;
+  --card-bg: #f8f9fa;
+  --card-hover-bg: #e9ecef;
+
   --text-primary: #212529;
-  --text-secondary: #495057;
   --text-muted: #6c757d;
   --text-disabled: #adb5bd;
 

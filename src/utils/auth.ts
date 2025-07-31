@@ -19,6 +19,12 @@ const DEMO_USERS = [
     name: 'Felipe',
   },
   {
+    email: 'jhonbustos@gmail.com',
+    password: 'Jhon123',
+    role: 'admin',
+    name: 'Jhon Bustos',
+  },
+  {
     email: 'supervisor1@fodiservices.com',
     password: 'super123',
     role: 'supervisor',
