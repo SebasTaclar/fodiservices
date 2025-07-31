@@ -3,9 +3,9 @@
     <nav class="navbar">
       <RouterLink class="link-navbar home" to="/">FODISERVICES</RouterLink>
 
-      <!-- Admin: Financiero, Operativo, Producto -->
+      <!-- Admin: Financiero, Supervisor, Producto -->
       <RouterLink v-if="canAccessFinancieroRef" class="link-navbar" to="/financiero">Financiero</RouterLink>
-      <RouterLink v-if="canAccessOperativoRef" class="link-navbar" to="/operativo">Operativo</RouterLink>
+      <RouterLink v-if="canAccessOperativoRef" class="link-navbar" to="/supervisor">Supervisor</RouterLink>
       <RouterLink v-if="canAccessProductoRef" class="link-navbar" to="/producto">Producto</RouterLink>
 
       <!-- Recursos Humanos: Todos los roles -->

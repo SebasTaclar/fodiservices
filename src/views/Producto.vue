@@ -12,33 +12,36 @@
         <div class="entry-form-card">
           <h3>Ingresar Producto</h3>
           <form @submit.prevent="addProduct" class="product-form">
-            <div class="form-group">
-              <label for="productType">Tipo de Producto:</label>
-              <select v-model="newProduct.type" id="productType" required>
-                <option value="">Selecciona tipo</option>
-                <option value="toma">Toma doble</option>
-                <option value="doble">Doble</option>
-                <option value="fulcro_fijo">Fulcro y Fijo</option>
-              </select>
-            </div>
+            <div class="form-fields">
+              <div class="form-group">
+                <label for="productType">Tipo de Producto:</label>
+                <select v-model="newProduct.type" id="productType" required>
+                  <option value="">Selecciona tipo</option>
+                  <option value="toma">Toma doble</option>
+                  <option value="doble">Fulcro</option>
+                  <option value="fulcro_fijo">Fijo</option>
+                </select>
+              </div>
 
-            <div class="form-group">
-              <label for="quantity">Cantidad:</label>
-              <input type="number" v-model.number="newProduct.quantity" id="quantity" min="1" required />
-            </div>
+              <div class="form-group">
+                <label for="quantity">Cantidad:</label>
+                <input type="number" v-model.number="newProduct.quantity" id="quantity" min="1" required />
+              </div>
 
-            <div class="form-group">
-              <label for="entryDate">Fecha de Ingreso:</label>
-              <input type="date" v-model="newProduct.entryDate" id="entryDate" :max="maxDate" required />
-            </div>
+              <div class="form-group">
+                <label for="entryDate">Fecha y Hora de Ingreso:</label>
+                <input type="datetime-local" v-model="newProduct.entryDateTime" id="entryDate" :max="maxDateTime"
+                  required />
+              </div>
 
-            <div class="form-group">
-              <label for="shift">Turno:</label>
-              <select v-model="newProduct.shift" id="shift" required>
-                <option value="">Selecciona turno</option>
-                <option value="am">AM (Mañana)</option>
-                <option value="pm">PM (Tarde)</option>
-              </select>
+              <div class="form-group">
+                <label for="shift">Turno:</label>
+                <select v-model="newProduct.shift" id="shift" required>
+                  <option value="">Selecciona turno</option>
+                  <option value="am">AM (Mañana)</option>
+                  <option value="pm">PM (Tarde)</option>
+                </select>
+              </div>
             </div>
 
             <button type="submit" class="submit-btn">Agregar Producto</button>
@@ -274,7 +277,7 @@ defineOptions({
 const newProduct = reactive({
   type: '',
   quantity: 1,
-  entryDate: new Date().toISOString().split('T')[0], // Fecha de hoy por defecto
+  entryDateTime: new Date().toISOString().slice(0, 16), // Fecha y hora actual por defecto
   shift: ''
 })
 
@@ -283,7 +286,7 @@ const productEntries = ref<Array<{
   id: number
   type: string
   quantity: number
-  entryDate: string
+  entryDateTime: string
   shift: string
   day: number
 }>>([])
@@ -291,36 +294,36 @@ const productEntries = ref<Array<{
 // Mock data para demo - Días laborales de Julio 2025 (Lunes a Sábado)
 const mockData = [
   // Semana 1
-  { id: 1, type: 'toma', quantity: 45, entryDate: '2025-07-01', shift: 'am', day: 1 }, // Martes
-  { id: 2, type: 'doble', quantity: 38, entryDate: '2025-07-02', shift: 'pm', day: 2 }, // Miércoles
-  { id: 3, type: 'fulcro_fijo', quantity: 42, entryDate: '2025-07-03', shift: 'am', day: 3 }, // Jueves
-  { id: 4, type: 'toma', quantity: 35, entryDate: '2025-07-04', shift: 'pm', day: 4 }, // Viernes
-  { id: 5, type: 'doble', quantity: 48, entryDate: '2025-07-05', shift: 'am', day: 5 }, // Sábado
+  { id: 1, type: 'toma', quantity: 45, entryDateTime: '2025-07-01T09:30', shift: 'am', day: 1 }, // Martes
+  { id: 2, type: 'doble', quantity: 38, entryDateTime: '2025-07-02T14:15', shift: 'pm', day: 2 }, // Miércoles
+  { id: 3, type: 'fulcro_fijo', quantity: 42, entryDateTime: '2025-07-03T08:45', shift: 'am', day: 3 }, // Jueves
+  { id: 4, type: 'toma', quantity: 35, entryDateTime: '2025-07-04T15:20', shift: 'pm', day: 4 }, // Viernes
+  { id: 5, type: 'doble', quantity: 48, entryDateTime: '2025-07-05T10:00', shift: 'am', day: 5 }, // Sábado
   // Semana 2
-  { id: 6, type: 'fulcro_fijo', quantity: 52, entryDate: '2025-07-07', shift: 'am', day: 7 }, // Lunes
-  { id: 7, type: 'toma', quantity: 44, entryDate: '2025-07-08', shift: 'pm', day: 8 }, // Martes
-  { id: 8, type: 'doble', quantity: 39, entryDate: '2025-07-09', shift: 'am', day: 9 }, // Miércoles
-  { id: 9, type: 'fulcro_fijo', quantity: 46, entryDate: '2025-07-10', shift: 'pm', day: 10 }, // Jueves
-  { id: 10, type: 'toma', quantity: 41, entryDate: '2025-07-11', shift: 'am', day: 11 }, // Viernes
-  { id: 11, type: 'doble', quantity: 37, entryDate: '2025-07-12', shift: 'pm', day: 12 }, // Sábado
+  { id: 6, type: 'fulcro_fijo', quantity: 52, entryDateTime: '2025-07-07T09:15', shift: 'am', day: 7 }, // Lunes
+  { id: 7, type: 'toma', quantity: 44, entryDateTime: '2025-07-08T13:30', shift: 'pm', day: 8 }, // Martes
+  { id: 8, type: 'doble', quantity: 39, entryDateTime: '2025-07-09T08:20', shift: 'am', day: 9 }, // Miércoles
+  { id: 9, type: 'fulcro_fijo', quantity: 46, entryDateTime: '2025-07-10T16:45', shift: 'pm', day: 10 }, // Jueves
+  { id: 10, type: 'toma', quantity: 41, entryDateTime: '2025-07-11T11:10', shift: 'am', day: 11 }, // Viernes
+  { id: 11, type: 'doble', quantity: 37, entryDateTime: '2025-07-12T14:30', shift: 'pm', day: 12 }, // Sábado
   // Semana 3
-  { id: 12, type: 'fulcro_fijo', quantity: 49, entryDate: '2025-07-14', shift: 'am', day: 14 }, // Lunes
-  { id: 13, type: 'toma', quantity: 43, entryDate: '2025-07-15', shift: 'pm', day: 15 }, // Martes
-  { id: 14, type: 'doble', quantity: 40, entryDate: '2025-07-16', shift: 'am', day: 16 }, // Miércoles
-  { id: 15, type: 'fulcro_fijo', quantity: 47, entryDate: '2025-07-17', shift: 'pm', day: 17 }, // Jueves
-  { id: 16, type: 'toma', quantity: 45, entryDate: '2025-07-18', shift: 'am', day: 18 }, // Viernes
-  { id: 17, type: 'doble', quantity: 42, entryDate: '2025-07-19', shift: 'pm', day: 19 }, // Sábado
+  { id: 12, type: 'fulcro_fijo', quantity: 49, entryDateTime: '2025-07-14T09:45', shift: 'am', day: 14 }, // Lunes
+  { id: 13, type: 'toma', quantity: 43, entryDateTime: '2025-07-15T15:15', shift: 'pm', day: 15 }, // Martes
+  { id: 14, type: 'doble', quantity: 40, entryDateTime: '2025-07-16T08:30', shift: 'am', day: 16 }, // Miércoles
+  { id: 15, type: 'fulcro_fijo', quantity: 47, entryDateTime: '2025-07-17T13:45', shift: 'pm', day: 17 }, // Jueves
+  { id: 16, type: 'toma', quantity: 45, entryDateTime: '2025-07-18T10:20', shift: 'am', day: 18 }, // Viernes
+  { id: 17, type: 'doble', quantity: 42, entryDateTime: '2025-07-19T14:50', shift: 'pm', day: 19 }, // Sábado
   // Semana 4
-  { id: 18, type: 'fulcro_fijo', quantity: 51, entryDate: '2025-07-21', shift: 'am', day: 21 }, // Lunes
-  { id: 19, type: 'toma', quantity: 46, entryDate: '2025-07-22', shift: 'pm', day: 22 }, // Martes
-  { id: 20, type: 'doble', quantity: 38, entryDate: '2025-07-23', shift: 'am', day: 23 }, // Miércoles
-  { id: 21, type: 'fulcro_fijo', quantity: 44, entryDate: '2025-07-24', shift: 'pm', day: 24 }, // Jueves
-  { id: 22, type: 'toma', quantity: 50, entryDate: '2025-07-25', shift: 'am', day: 25 }, // Viernes
-  { id: 23, type: 'doble', quantity: 43, entryDate: '2025-07-26', shift: 'pm', day: 26 }, // Sábado
+  { id: 18, type: 'fulcro_fijo', quantity: 51, entryDateTime: '2025-07-21T09:30', shift: 'am', day: 21 }, // Lunes
+  { id: 19, type: 'toma', quantity: 46, entryDateTime: '2025-07-22T15:40', shift: 'pm', day: 22 }, // Martes
+  { id: 20, type: 'doble', quantity: 38, entryDateTime: '2025-07-23T08:15', shift: 'am', day: 23 }, // Miércoles
+  { id: 21, type: 'fulcro_fijo', quantity: 44, entryDateTime: '2025-07-24T13:25', shift: 'pm', day: 24 }, // Jueves
+  { id: 22, type: 'toma', quantity: 50, entryDateTime: '2025-07-25T11:35', shift: 'am', day: 25 }, // Viernes
+  { id: 23, type: 'doble', quantity: 43, entryDateTime: '2025-07-26T14:15', shift: 'pm', day: 26 }, // Sábado
   // Semana 5
-  { id: 24, type: 'fulcro_fijo', quantity: 48, entryDate: '2025-07-28', shift: 'am', day: 28 }, // Lunes
-  { id: 25, type: 'toma', quantity: 41, entryDate: '2025-07-29', shift: 'pm', day: 29 }, // Martes
-  { id: 26, type: 'doble', quantity: 45, entryDate: '2025-07-30', shift: 'am', day: 30 }, // Miércoles
+  { id: 24, type: 'fulcro_fijo', quantity: 48, entryDateTime: '2025-07-28T09:00', shift: 'am', day: 28 }, // Lunes
+  { id: 25, type: 'toma', quantity: 41, entryDateTime: '2025-07-29T15:30', shift: 'pm', day: 29 }, // Martes
+  { id: 26, type: 'doble', quantity: 45, entryDateTime: '2025-07-30T10:45', shift: 'am', day: 30 }, // Miércoles
 ]
 
 // Chart reference
@@ -341,9 +344,9 @@ const chartData = ref<number[]>([])
 const hoveredPoint = ref(-1)
 
 // Current date for max date validation
-const maxDate = computed(() => {
+const maxDateTime = computed(() => {
   const today = new Date()
-  return today.toISOString().split('T')[0]
+  return today.toISOString().slice(0, 16) // YYYY-MM-DDTHH:MM format
 })
 
 // Monthly goal
@@ -356,7 +359,7 @@ const monthlyTotal = computed(() => {
 
   return productEntries.value
     .filter(entry => {
-      const entryDate = new Date(entry.entryDate)
+      const entryDate = new Date(entry.entryDateTime)
       return entryDate.getMonth() === currentMonth && entryDate.getFullYear() === currentYear
     })
     .reduce((total, entry) => total + entry.quantity, 0)
@@ -373,7 +376,7 @@ const getMonthlyData = () => {
 
   productEntries.value
     .filter(entry => {
-      const entryDate = new Date(entry.entryDate)
+      const entryDate = new Date(entry.entryDateTime)
       return entryDate.getMonth() === currentMonth && entryDate.getFullYear() === currentYear
     })
     .forEach(entry => {
@@ -388,30 +391,30 @@ const getMonthlyData = () => {
 
 // Add new product
 const addProduct = () => {
-  if (!newProduct.type || !newProduct.quantity || !newProduct.entryDate || !newProduct.shift) {
+  if (!newProduct.type || !newProduct.quantity || !newProduct.entryDateTime || !newProduct.shift) {
     alert('Por favor completa todos los campos')
     return
   }
 
-  const entryDate = new Date(newProduct.entryDate)
+  const entryDate = new Date(newProduct.entryDateTime)
   const day = entryDate.getDate()
 
   const entry = {
     id: Date.now(),
     type: newProduct.type,
     quantity: newProduct.quantity,
-    entryDate: newProduct.entryDate,
+    entryDateTime: newProduct.entryDateTime,
     shift: newProduct.shift,
     day: day
   }
 
   productEntries.value.push(entry)
 
-  // Reset form pero mantener la fecha
-  const currentDate = newProduct.entryDate
+  // Reset form pero mantener la fecha y hora
+  const currentDateTime = newProduct.entryDateTime
   newProduct.type = ''
   newProduct.quantity = 1
-  newProduct.entryDate = currentDate
+  newProduct.entryDateTime = currentDateTime
   newProduct.shift = ''
 
   // Redraw chart
@@ -652,7 +655,7 @@ const drawChart = () => {
 
 // Initialize date to today
 onMounted(() => {
-  newProduct.entryDate = maxDate.value
+  newProduct.entryDateTime = maxDateTime.value
   // Cargar datos mock para demo
   productEntries.value = [...mockData]
   nextTick(() => {
@@ -734,6 +737,10 @@ onMounted(() => {
   box-shadow: 0 8px 32px rgba(3, 22, 51, 0.1);
   border: 1px solid rgba(255, 165, 0, 0.2);
   min-width: 300px;
+  height: 477px;
+  /* Altura fija igual al gráfico */
+  display: flex;
+  flex-direction: column;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -749,7 +756,19 @@ onMounted(() => {
 .product-form {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
+  /* Aumentado de 0.75rem */
+  flex: 1;
+  /* Para que ocupe el espacio disponible */
+  justify-content: space-between;
+  /* Distribuir el espacio */
+}
+
+/* Contenedor para los campos del formulario */
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .form-group {
@@ -760,19 +779,26 @@ onMounted(() => {
 .form-group label {
   color: var(--text-color, #031633);
   font-weight: 600;
-  margin-bottom: 0.25rem;
-  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+  /* Aumentado de 0.25rem */
+  font-size: 0.9rem;
+  /* Aumentado de 0.85rem */
 }
 
 .form-group select,
 .form-group input {
-  padding: 0.5rem;
+  padding: 0.75rem;
+  /* Aumentado de 0.5rem */
   border: 2px solid var(--border-color, #e0e6ed);
-  border-radius: 6px;
-  font-size: 0.9rem;
+  border-radius: 8px;
+  /* Aumentado de 6px */
+  font-size: 1rem;
+  /* Aumentado de 0.9rem */
   transition: border-color 0.3s ease;
   background-color: var(--bg-color, white);
   color: var(--text-color, #031633);
+  min-height: 44px;
+  /* Altura mínima para mejor usabilidad */
 }
 
 .form-group select:focus,
@@ -782,17 +808,56 @@ onMounted(() => {
   box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.1);
 }
 
+/* Estilos específicos para datetime-local en dark theme */
+.form-group input[type="datetime-local"] {
+  position: relative;
+  color-scheme: dark light;
+  /* Permitir que el navegador adapte el color */
+}
+
+/* Para navegadores WebKit (Chrome, Safari, Edge) */
+.form-group input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: var(--datetime-icon-filter, invert(0));
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.form-group input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+  background-color: rgba(255, 165, 0, 0.1);
+}
+
+/* Variables CSS para el filtro del icono */
+:root {
+  --datetime-icon-filter: invert(0);
+  /* Light theme - icono normal */
+}
+
+[data-theme="dark"] {
+  --datetime-icon-filter: invert(1);
+  /* Dark theme - icono blanco */
+}
+
 .submit-btn {
   background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
   color: white;
   border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  font-size: 0.9rem;
+  padding: 1rem 1.5rem;
+  /* Aumentado de 0.75rem */
+  border-radius: 8px;
+  /* Aumentado de 6px */
+  font-size: 1rem;
+  /* Aumentado de 0.9rem */
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 0.5rem;
+  margin-top: 0;
+  /* Eliminar margen superior ya que está en la parte inferior */
+  min-height: 48px;
+  /* Altura mínima consistente */
+  align-self: stretch;
+  /* Ocupar todo el ancho disponible */
 }
 
 .submit-btn:hover {
@@ -857,6 +922,8 @@ onMounted(() => {
   box-shadow: 0 8px 32px rgba(3, 22, 51, 0.1);
   border: 1px solid rgba(255, 165, 0, 0.2);
   min-width: 400px;
+  height: 477px;
+  /* Altura fija específica */
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -1484,7 +1551,7 @@ onMounted(() => {
 
 /* Theme-specific variables */
 :root {
-  --tooltip-bg: rgba(0, 0, 0, 0.9);
+  --tooltip-bg: rgba(0, 0, 0, 0.98);
   --tooltip-text: #ffffff;
   --tooltip-border: rgba(255, 255, 255, 0.2);
   --chart-bg: rgba(255, 255, 255, 0.02);
@@ -1494,7 +1561,7 @@ onMounted(() => {
 }
 
 [data-theme="light"] {
-  --tooltip-bg: rgba(50, 50, 50, 0.95);
+  --tooltip-bg: rgba(30, 30, 30, 0.98);
   --tooltip-text: #ffffff;
   --tooltip-border: rgba(255, 255, 255, 0.1);
   --chart-bg: rgba(0, 0, 0, 0.02);
@@ -1504,7 +1571,7 @@ onMounted(() => {
 }
 
 [data-theme="dark"] {
-  --tooltip-bg: rgba(40, 40, 40, 0.95);
+  --tooltip-bg: rgba(20, 20, 20, 0.98);
   --tooltip-text: #ffffff;
   --tooltip-border: rgba(255, 255, 255, 0.15);
   --chart-bg: rgba(255, 255, 255, 0.02);

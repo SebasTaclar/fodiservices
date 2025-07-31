@@ -20,9 +20,9 @@ const router = createRouter({
       component: () => import('../views/Financiero.vue'),
     },
     {
-      path: '/operativo',
-      name: 'operativo',
-      component: () => import('../views/Operativo.vue'),
+      path: '/supervisor',
+      name: 'supervisor',
+      component: () => import('../views/Supervisor.vue'),
     },
     {
       path: '/producto',
