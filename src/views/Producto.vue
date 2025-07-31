@@ -779,26 +779,26 @@ onMounted(() => {
 .form-group label {
   color: var(--text-color, #031633);
   font-weight: 600;
-  margin-bottom: 0.4rem;
-  /* Aumentado de 0.25rem */
-  font-size: 0.9rem;
-  /* Aumentado de 0.85rem */
+  margin-bottom: 0.3rem;
+  /* Reducido de 0.4rem */
+  font-size: 0.85rem;
+  /* Reducido de 0.9rem */
 }
 
 .form-group select,
 .form-group input {
-  padding: 0.75rem;
-  /* Aumentado de 0.5rem */
+  padding: 0.6rem;
+  /* Reducido de 0.75rem */
   border: 2px solid var(--border-color, #e0e6ed);
-  border-radius: 8px;
-  /* Aumentado de 6px */
-  font-size: 1rem;
-  /* Aumentado de 0.9rem */
+  border-radius: 6px;
+  /* Reducido de 8px */
+  font-size: 0.9rem;
+  /* Reducido de 1rem */
   transition: border-color 0.3s ease;
   background-color: var(--bg-color, white);
   color: var(--text-color, #031633);
-  min-height: 44px;
-  /* Altura mínima para mejor usabilidad */
+  min-height: 38px;
+  /* Reducido de 44px */
 }
 
 .form-group select:focus,
@@ -843,8 +843,8 @@ onMounted(() => {
   background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
   color: white;
   border: none;
-  padding: 1rem 1.5rem;
-  /* Aumentado de 0.75rem */
+  padding: 1.25rem 1.75rem;
+  /* Aumentado de 1rem 1.5rem */
   border-radius: 8px;
   /* Aumentado de 6px */
   font-size: 1rem;
@@ -854,8 +854,8 @@ onMounted(() => {
   transition: all 0.3s ease;
   margin-top: 0;
   /* Eliminar margen superior ya que está en la parte inferior */
-  min-height: 48px;
-  /* Altura mínima consistente */
+  min-height: 52px;
+  /* Aumentado de 48px para acomodar el padding extra */
   align-self: stretch;
   /* Ocupar todo el ancho disponible */
 }

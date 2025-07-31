@@ -1,408 +1,818 @@
 <template>
- <div class="operativo-container">
-  <div class="page-header">
-   <h1>⚙️ MÓDULO OPERATIVO</h1>
-   <p>Gestión operacional y procesos de FODISERVICES</p>
+  <div class="supervisor-container">
+    <div class="page-header">
+      <h1>👨‍💼 MÓDULO SUPERVISOR</h1>
+      <p>Gestión de supervisión y aprobación de procesos</p>
+    </div>
+
+    <!-- Tabla de Aprobación de Empleados -->
+    <div class="approval-section">
+      <div class="approval-card">
+        <h3>📋 Aprobación de Unidades por Empleado</h3>
+        <div class="table-container">
+          <table class="approval-table">
+            <thead>
+              <tr>
+                <th>Empleado</th>
+                <th>Rol</th>
+                <th>Fecha/Hora</th>
+                <th>Tipo Producto</th>
+                <th>Cantidad</th>
+                <th>Turno</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="entry in pendingEntries" :key="entry.id" class="table-row">
+                <td class="employee-info">
+                  <div class="employee-avatar">{{ entry.employeeName.charAt(0).toUpperCase() }}</div>
+                  <span>{{ entry.employeeName }}</span>
+                </td>
+                <td>
+                  <span class="role-badge" :class="entry.employeeRole">{{ entry.employeeRole.toUpperCase() }}</span>
+                </td>
+                <td class="date-time">{{ formatDateTime(entry.entryDateTime) }}</td>
+                <td>
+                  <span class="product-type">{{ getProductTypeName(entry.type) }}</span>
+                </td>
+                <td class="quantity">{{ entry.quantity }} unidades</td>
+                <td>
+                  <span class="shift-badge" :class="entry.shift">{{ entry.shift === 'am' ? 'Mañana' : 'Tarde' }}</span>
+                </td>
+                <td>
+                  <span class="status-badge" :class="entry.status">{{ getStatusName(entry.status) }}</span>
+                </td>
+                <td class="actions">
+                  <button v-if="entry.status === 'pending'" @click="approveEntry(entry.id)" class="approve-btn">
+                    ✅ Aprobar
+                  </button>
+                  <button v-if="entry.status === 'pending'" @click="rejectEntry(entry.id)" class="reject-btn">
+                    ❌ Rechazar
+                  </button>
+                  <span v-if="entry.status !== 'pending'" class="action-completed">
+                    {{ entry.status === 'approved' ? '✅ Aprobado' : '❌ Rechazado' }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="card">
+        <div class="card-header">
+          <h3>📋 Proyectos Activos</h3>
+        </div>
+        <div class="card-content">
+          <div class="metric">
+            <span class="value">24</span>
+            <span class="label">En progreso</span>
+          </div>
+          <div class="status-indicator active"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>✅ Proyectos Completados</h3>
+        </div>
+        <div class="card-content">
+          <div class="metric">
+            <span class="value">156</span>
+            <span class="label">Este año</span>
+          </div>
+          <div class="status-indicator completed"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>⏳ Pendientes</h3>
+        </div>
+        <div class="card-content">
+          <div class="metric">
+            <span class="value">8</span>
+            <span class="label">Por iniciar</span>
+          </div>
+          <div class="status-indicator pending"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>📊 Eficiencia</h3>
+        </div>
+        <div class="card-content">
+          <div class="metric">
+            <span class="value">92%</span>
+            <span class="label">Promedio</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 92%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="operations-section">
+      <div class="operations-card">
+        <h3>🔄 Procesos Operativos</h3>
+        <div class="process-list">
+          <div class="process-item">
+            <div class="process-icon">🏗️</div>
+            <div class="process-info">
+              <h4>Construcción de Software</h4>
+              <p>Desarrollo y implementación de soluciones tecnológicas</p>
+              <div class="process-status active">En Ejecución</div>
+            </div>
+          </div>
+
+          <div class="process-item">
+            <div class="process-icon">🔧</div>
+            <div class="process-info">
+              <h4>Mantenimiento de Sistemas</h4>
+              <p>Soporte técnico y mantenimiento preventivo</p>
+              <div class="process-status completed">Completado</div>
+            </div>
+          </div>
+
+          <div class="process-item">
+            <div class="process-icon">📱</div>
+            <div class="process-info">
+              <h4>Desarrollo Mobile</h4>
+              <p>Aplicaciones móviles para iOS y Android</p>
+              <div class="process-status pending">Planificado</div>
+            </div>
+          </div>
+
+          <div class="process-item">
+            <div class="process-icon">☁️</div>
+            <div class="process-info">
+              <h4>Migración a la Nube</h4>
+              <p>Implementación de infraestructura cloud</p>
+              <div class="process-status active">En Progreso</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="operations-card">
+        <h3>📈 Métricas Operativas</h3>
+        <div class="metrics-grid">
+          <div class="metric-item">
+            <span class="metric-number">98.5%</span>
+            <span class="metric-label">Uptime</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-number">4.2s</span>
+            <span class="metric-label">Tiempo Respuesta</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-number">99.1%</span>
+            <span class="metric-label">Satisfacción Cliente</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-number">24/7</span>
+            <span class="metric-label">Soporte</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="dashboard-grid">
-   <div class="card">
-    <div class="card-header">
-     <h3>📋 Proyectos Activos</h3>
-    </div>
-    <div class="card-content">
-     <div class="metric">
-      <span class="value">24</span>
-      <span class="label">En progreso</span>
-     </div>
-     <div class="status-indicator active"></div>
-    </div>
-   </div>
-
-   <div class="card">
-    <div class="card-header">
-     <h3>✅ Proyectos Completados</h3>
-    </div>
-    <div class="card-content">
-     <div class="metric">
-      <span class="value">156</span>
-      <span class="label">Este año</span>
-     </div>
-     <div class="status-indicator completed"></div>
-    </div>
-   </div>
-
-   <div class="card">
-    <div class="card-header">
-     <h3>⏳ Pendientes</h3>
-    </div>
-    <div class="card-content">
-     <div class="metric">
-      <span class="value">8</span>
-      <span class="label">Por iniciar</span>
-     </div>
-     <div class="status-indicator pending"></div>
-    </div>
-   </div>
-
-   <div class="card">
-    <div class="card-header">
-     <h3>📊 Eficiencia</h3>
-    </div>
-    <div class="card-content">
-     <div class="metric">
-      <span class="value">92%</span>
-      <span class="label">Promedio</span>
-     </div>
-     <div class="progress-bar">
-      <div class="progress" style="width: 92%"></div>
-     </div>
-    </div>
-   </div>
-  </div>
-
-  <div class="operations-section">
-   <div class="operations-card">
-    <h3>🔄 Procesos Operativos</h3>
-    <div class="process-list">
-     <div class="process-item">
-      <div class="process-icon">🏗️</div>
-      <div class="process-info">
-       <h4>Construcción de Software</h4>
-       <p>Desarrollo y implementación de soluciones tecnológicas</p>
-       <div class="process-status active">En Ejecución</div>
-      </div>
-     </div>
-
-     <div class="process-item">
-      <div class="process-icon">🔧</div>
-      <div class="process-info">
-       <h4>Mantenimiento de Sistemas</h4>
-       <p>Soporte técnico y mantenimiento preventivo</p>
-       <div class="process-status completed">Completado</div>
-      </div>
-     </div>
-
-     <div class="process-item">
-      <div class="process-icon">📱</div>
-      <div class="process-info">
-       <h4>Desarrollo Mobile</h4>
-       <p>Aplicaciones móviles para iOS y Android</p>
-       <div class="process-status pending">Planificado</div>
-      </div>
-     </div>
-
-     <div class="process-item">
-      <div class="process-icon">☁️</div>
-      <div class="process-info">
-       <h4>Migración a la Nube</h4>
-       <p>Implementación de infraestructura cloud</p>
-       <div class="process-status active">En Progreso</div>
-      </div>
-     </div>
-    </div>
-   </div>
-
-   <div class="operations-card">
-    <h3>📈 Métricas Operativas</h3>
-    <div class="metrics-grid">
-     <div class="metric-item">
-      <span class="metric-number">98.5%</span>
-      <span class="metric-label">Uptime</span>
-     </div>
-     <div class="metric-item">
-      <span class="metric-number">4.2s</span>
-      <span class="metric-label">Tiempo Respuesta</span>
-     </div>
-     <div class="metric-item">
-      <span class="metric-number">99.1%</span>
-      <span class="metric-label">Satisfacción Cliente</span>
-     </div>
-     <div class="metric-item">
-      <span class="metric-number">24/7</span>
-      <span class="metric-label">Soporte</span>
-     </div>
-    </div>
-   </div>
-  </div>
- </div>
 </template>
 
 <script setup lang="ts">
+import { ref, reactive } from 'vue'
+
 defineOptions({
- name: 'OperativoView',
+  name: 'SupervisorView',
 });
+
+// Datos de ejemplo para las entradas pendientes de aprobación
+const pendingEntries = ref([
+  {
+    id: 1,
+    employeeName: 'Carlos Rodriguez',
+    employeeRole: 'admin',
+    entryDateTime: '2025-07-30T09:30:00',
+    type: 'toma',
+    quantity: 45,
+    shift: 'am',
+    status: 'pending'
+  },
+  {
+    id: 2,
+    employeeName: 'Ana Martinez',
+    employeeRole: 'admin',
+    entryDateTime: '2025-07-30T14:15:00',
+    type: 'doble',
+    quantity: 38,
+    shift: 'pm',
+    status: 'pending'
+  },
+  {
+    id: 3,
+    employeeName: 'Luis Garcia',
+    employeeRole: 'admin',
+    entryDateTime: '2025-07-30T08:45:00',
+    type: 'fulcro_fijo',
+    quantity: 42,
+    shift: 'am',
+    status: 'approved'
+  },
+  {
+    id: 4,
+    employeeName: 'Maria Lopez',
+    employeeRole: 'admin',
+    entryDateTime: '2025-07-29T15:20:00',
+    type: 'toma',
+    quantity: 35,
+    shift: 'pm',
+    status: 'rejected'
+  },
+  {
+    id: 5,
+    employeeName: 'Pedro Silva',
+    employeeRole: 'admin',
+    entryDateTime: '2025-07-30T10:00:00',
+    type: 'doble',
+    quantity: 48,
+    shift: 'am',
+    status: 'pending'
+  }
+])
+
+// Funciones auxiliares
+const formatDateTime = (dateTime: string) => {
+  const date = new Date(dateTime)
+  return date.toLocaleDateString('es-ES', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  })
+}
+
+const getProductTypeName = (type: string) => {
+  const types: { [key: string]: string } = {
+    'toma': 'Toma Doble',
+    'doble': 'Fulcro',
+    'fulcro_fijo': 'Fijo'
+  }
+  return types[type] || type
+}
+
+const getStatusName = (status: string) => {
+  const statuses: { [key: string]: string } = {
+    'pending': 'Pendiente',
+    'approved': 'Aprobado',
+    'rejected': 'Rechazado'
+  }
+  return statuses[status] || status
+}
+
+// Funciones de aprobación
+const approveEntry = (entryId: number) => {
+  const entry = pendingEntries.value.find(e => e.id === entryId)
+  if (entry) {
+    entry.status = 'approved'
+    // Aquí se podría hacer una llamada a la API para persistir el cambio
+    console.log(`Entrada ${entryId} aprobada`)
+  }
+}
+
+const rejectEntry = (entryId: number) => {
+  const entry = pendingEntries.value.find(e => e.id === entryId)
+  if (entry) {
+    entry.status = 'rejected'
+    // Aquí se podría hacer una llamada a la API para persistir el cambio
+    console.log(`Entrada ${entryId} rechazada`)
+  }
+}
 </script>
 
 <style scoped>
-.operativo-container {
- padding: 2rem;
- padding-top: 80px;
- /* Offset para navbar fija */
- background-color: #f8f9fa;
- min-height: 100vh;
- font-family: 'Montserrat', sans-serif;
+.supervisor-container {
+  padding: 2rem;
+  padding-top: 80px;
+  /* Offset para navbar fija */
+  background-color: var(--bg-color, #f8f9fa);
+  color: var(--text-color, #031633);
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .page-header {
- text-align: center;
- margin-bottom: 3rem;
+  text-align: center;
+  margin-bottom: 3rem;
 }
 
 .page-header h1 {
- color: #031633;
- font-size: 2.5rem;
- font-weight: 800;
- margin-bottom: 0.5rem;
+  color: var(--text-color, #031633);
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
 }
 
 .page-header p {
- color: #666;
- font-size: 1.1rem;
+  color: var(--text-secondary, #666);
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
 }
 
 .dashboard-grid {
- display: grid;
- grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
- gap: 2rem;
- margin-bottom: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
 }
 
 .card {
- background: white;
- border-radius: 12px;
- box-shadow: 0 4px 16px rgba(3, 22, 51, 0.1);
- overflow: hidden;
- transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: var(--bg-color, white);
+  color: var(--text-color, #031633);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(3, 22, 51, 0.1);
+  border: 1px solid var(--border-color, rgba(255, 165, 0, 0.1));
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 .card:hover {
- transform: translateY(-4px);
- box-shadow: 0 8px 32px rgba(3, 22, 51, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(3, 22, 51, 0.15);
 }
 
 .card-header {
- background: linear-gradient(135deg, #031633 0%, #0a2a5c 100%);
- color: white;
- padding: 1.5rem;
+  background: linear-gradient(135deg, #031633 0%, #0a2a5c 100%);
+  color: white;
+  padding: 1.5rem;
 }
 
 .card-header h3 {
- margin: 0;
- font-size: 1.2rem;
- font-weight: 700;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
 .card-content {
- padding: 2rem;
- position: relative;
+  padding: 2rem;
+  position: relative;
 }
 
 .metric {
- text-align: center;
- margin-bottom: 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 .value {
- display: block;
- font-size: 2rem;
- font-weight: 800;
- color: #031633;
- margin-bottom: 0.5rem;
+  display: block;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-color, #031633);
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
 }
 
 .label {
- color: #666;
- font-size: 0.9rem;
- text-transform: uppercase;
- letter-spacing: 0.5px;
+  color: var(--text-secondary, #666);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
 }
 
 .status-indicator {
- width: 12px;
- height: 12px;
- border-radius: 50%;
- position: absolute;
- top: 1rem;
- right: 1rem;
- animation: pulse 2s infinite;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  animation: pulse 2s infinite;
 }
 
 .status-indicator.active {
- background-color: #28a745;
+  background-color: #28a745;
 }
 
 .status-indicator.completed {
- background-color: #007bff;
+  background-color: #007bff;
 }
 
 .status-indicator.pending {
- background-color: #ffc107;
+  background-color: #ffc107;
 }
 
 @keyframes pulse {
- 0% {
-  opacity: 1;
- }
+  0% {
+    opacity: 1;
+  }
 
- 50% {
-  opacity: 0.5;
- }
+  50% {
+    opacity: 0.5;
+  }
 
- 100% {
-  opacity: 1;
- }
+  100% {
+    opacity: 1;
+  }
 }
 
 .progress-bar {
- width: 100%;
- height: 8px;
- background-color: #e9ecef;
- border-radius: 4px;
- overflow: hidden;
+  width: 100%;
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .progress {
- height: 100%;
- background: linear-gradient(90deg, #FFA500 0%, #FFB733 100%);
- border-radius: 4px;
- transition: width 0.5s ease;
+  height: 100%;
+  background: linear-gradient(90deg, #FFA500 0%, #FFB733 100%);
+  border-radius: 4px;
+  transition: width 0.5s ease;
 }
 
 .operations-section {
- display: grid;
- grid-template-columns: 2fr 1fr;
- gap: 2rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
 }
 
 .operations-card {
- background: white;
- border-radius: 12px;
- box-shadow: 0 4px 16px rgba(3, 22, 51, 0.1);
- padding: 2rem;
+  background: var(--bg-color, white);
+  color: var(--text-color, #031633);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(3, 22, 51, 0.1);
+  border: 1px solid var(--border-color, rgba(255, 165, 0, 0.1));
+  padding: 2rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .operations-card h3 {
- color: #031633;
- margin-bottom: 1.5rem;
- font-size: 1.3rem;
- font-weight: 700;
+  color: var(--text-color, #031633);
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  transition: color 0.3s ease;
 }
 
 .process-list {
- display: flex;
- flex-direction: column;
- gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .process-item {
- display: flex;
- align-items: center;
- gap: 1rem;
- padding: 1rem;
- border-radius: 8px;
- background-color: #f8f9fa;
- transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: var(--card-bg, #f8f9fa);
+  border: 1px solid var(--border-color, rgba(255, 165, 0, 0.1));
+  transition: all 0.3s ease;
 }
 
 .process-item:hover {
- background-color: #e9ecef;
- transform: translateX(4px);
+  background-color: var(--card-hover-bg, #e9ecef);
+  transform: translateX(4px);
 }
 
 .process-icon {
- font-size: 2rem;
- width: 60px;
- text-align: center;
+  font-size: 2rem;
+  width: 60px;
+  text-align: center;
 }
 
 .process-info {
- flex: 1;
+  flex: 1;
 }
 
 .process-info h4 {
- margin: 0 0 0.5rem 0;
- color: #031633;
- font-size: 1.1rem;
- font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--text-color, #031633);
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: color 0.3s ease;
 }
 
 .process-info p {
- margin: 0 0 0.5rem 0;
- color: #666;
- font-size: 0.9rem;
+  margin: 0 0 0.5rem 0;
+  color: var(--text-secondary, #666);
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
 }
 
 .process-status {
- display: inline-block;
- padding: 0.3rem 0.8rem;
- border-radius: 20px;
- font-size: 0.8rem;
- font-weight: 600;
- text-transform: uppercase;
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .process-status.active {
- background-color: #d4edda;
- color: #155724;
+  background-color: #d4edda;
+  color: #155724;
 }
 
 .process-status.completed {
- background-color: #d1ecf1;
- color: #0c5460;
+  background-color: #d1ecf1;
+  color: #0c5460;
 }
 
 .process-status.pending {
- background-color: #fff3cd;
- color: #856404;
+  background-color: #fff3cd;
+  color: #856404;
 }
 
 .metrics-grid {
- display: grid;
- grid-template-columns: 1fr 1fr;
- gap: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
 }
 
 .metric-item {
- text-align: center;
- padding: 1.5rem;
- border-radius: 8px;
- background: linear-gradient(135deg, #FFA500 0%, #FFB733 100%);
- color: white;
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #FFA500 0%, #FFB733 100%);
+  color: white;
 }
 
 .metric-number {
- display: block;
- font-size: 1.8rem;
- font-weight: 800;
- margin-bottom: 0.5rem;
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
 }
 
 .metric-label {
- font-size: 0.9rem;
- text-transform: uppercase;
- letter-spacing: 0.5px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 @media (max-width: 768px) {
- .operativo-container {
-  padding: 1rem;
- }
+  .supervisor-container {
+    padding: 1rem;
+  }
 
- .dashboard-grid {
-  grid-template-columns: 1fr;
- }
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
 
- .operations-section {
-  grid-template-columns: 1fr;
- }
+  .operations-section {
+    grid-template-columns: 1fr;
+  }
 
- .metrics-grid {
-  grid-template-columns: 1fr;
- }
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
 
- .page-header h1 {
-  font-size: 2rem;
- }
+  .page-header h1 {
+    font-size: 2rem;
+  }
+}
+
+/* Estilos para la tabla de aprobación */
+.approval-section {
+  margin-bottom: 3rem;
+}
+
+.approval-card {
+  background: var(--bg-color, white);
+  color: var(--text-color, #031633);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(3, 22, 51, 0.1);
+  border: 1px solid var(--border-color, rgba(255, 165, 0, 0.15));
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.approval-card h3 {
+  color: var(--text-color, #031633);
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.table-container {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border-color, rgba(255, 165, 0, 0.2));
+}
+
+.approval-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.approval-table thead {
+  background: linear-gradient(135deg, #031633 0%, #0a2a5c 100%);
+  color: white;
+}
+
+.approval-table th,
+.approval-table td {
+  padding: 1rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color, rgba(255, 165, 0, 0.1));
+  vertical-align: middle;
+}
+
+.approval-table th {
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.table-row {
+  background: var(--bg-color, white);
+  color: var(--text-color, #031633);
+  transition: background-color 0.2s ease, color 0.3s ease;
+}
+
+.table-row:hover {
+  background-color: var(--card-hover-bg, rgba(255, 165, 0, 0.05));
+}
+
+.employee-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.employee-avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.role-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.role-badge.admin {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.role-badge.supervisor {
+  background-color: #3498db;
+  color: white;
+}
+
+.date-time {
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  color: var(--text-secondary, #666);
+}
+
+.product-type {
+  background-color: var(--card-bg, rgba(255, 165, 0, 0.1));
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid rgba(255, 165, 0, 0.3);
+}
+
+.quantity {
+  font-weight: 600;
+  color: var(--text-color, #031633);
+}
+
+.shift-badge {
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.shift-badge.am {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.shift-badge.pm {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.status-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.approved {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-badge.rejected {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 44px;
+}
+
+.approve-btn,
+.reject-btn {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.approve-btn {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+}
+
+.approve-btn:hover {
+  background: linear-gradient(135deg, #20c997 0%, #17a2b8 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
+.reject-btn {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  color: white;
+}
+
+.reject-btn:hover {
+  background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+.action-completed {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  background-color: var(--card-bg, rgba(255, 165, 0, 0.1));
+}
+
+@media (max-width: 1024px) {
+  .approval-table {
+    font-size: 0.8rem;
+  }
+
+  .approval-table th,
+  .approval-table td {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .approve-btn,
+  .reject-btn {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+  }
 }
 </style>
