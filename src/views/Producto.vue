@@ -1066,12 +1066,25 @@ onMounted(() => {
   }
 
   .chart-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 1fr auto !important;
+    gap: 1rem !important;
+  }
+
+  .chart-container {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
   }
 
   .chart-metrics-sidebar {
-    flex-direction: column;
-    gap: 0.75rem;
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    flex-direction: row !important;
+    justify-content: space-around !important;
+    gap: 1rem !important;
+    min-width: 100% !important;
+    margin-top: 0 !important;
   }
 
   .chart-container canvas {
