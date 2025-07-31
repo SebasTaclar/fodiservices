@@ -3,22 +3,67 @@
     <nav class="navbar">
       <RouterLink class="link-navbar home" to="/">FODISERVICES</RouterLink>
 
-      <!-- Admin: Financiero, Supervisor, Producto -->
-      <RouterLink v-if="canAccessFinancieroRef" class="link-navbar" to="/financiero">Financiero</RouterLink>
-      <RouterLink v-if="canAccessOperativoRef" class="link-navbar" to="/supervisor">Supervisor</RouterLink>
-      <RouterLink v-if="canAccessProductoRef" class="link-navbar" to="/producto">Producto</RouterLink>
+      <!-- Menu hamburguesa para mobile -->
+      <button class="hamburger-menu" @click="toggleMobileMenu" :class="{ 'active': isMobileMenuOpen }">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
-      <!-- Recursos Humanos: Todos los roles -->
-      <RouterLink v-if="canAccessRecursosHumanosRef" class="link-navbar" to="/recursos-humanos">Recursos Humanos
-      </RouterLink>
+      <!-- Links de navegación desktop -->
+      <div class="nav-links desktop-nav">
+        <!-- Admin: Financiero, Supervisor, Producto -->
+        <RouterLink v-if="canAccessFinancieroRef" class="link-navbar" to="/financiero">Financiero</RouterLink>
+        <RouterLink v-if="canAccessOperativoRef" class="link-navbar" to="/supervisor">Supervisor</RouterLink>
+        <RouterLink v-if="canAccessProductoRef" class="link-navbar" to="/producto">Producto</RouterLink>
 
-      <div class="nav-controls">
+        <!-- Recursos Humanos: Todos los roles -->
+        <RouterLink v-if="canAccessRecursosHumanosRef" class="link-navbar" to="/recursos-humanos">Recursos Humanos
+        </RouterLink>
+      </div>
+
+      <!-- Controles de navegación desktop -->
+      <div class="nav-controls desktop-nav">
         <ThemeToggle />
         <RouterLink v-if="!isLoggedIn" class="link-navbar access" to="/login">Acceder</RouterLink>
         <span v-if="isLoggedIn" class="link-navbar access role-badge" :class="userRole">
           {{ userRole?.toUpperCase() }} - {{ username }}
         </span>
         <RouterLink v-if="isLoggedIn" @click="logout" class="link-navbar logout-btn" to="/">Cerrar sesión</RouterLink>
+      </div>
+
+      <!-- Menu mobile desplegable -->
+      <div class="mobile-menu" :class="{ 'active': isMobileMenuOpen }">
+        <div class="mobile-menu-content">
+          <!-- Links de navegación mobile -->
+          <RouterLink v-if="canAccessFinancieroRef" class="mobile-link" to="/financiero" @click="closeMobileMenu">
+            Financiero
+          </RouterLink>
+          <RouterLink v-if="canAccessOperativoRef" class="mobile-link" to="/supervisor" @click="closeMobileMenu">
+            Supervisor
+          </RouterLink>
+          <RouterLink v-if="canAccessProductoRef" class="mobile-link" to="/producto" @click="closeMobileMenu">
+            Producto
+          </RouterLink>
+          <RouterLink v-if="canAccessRecursosHumanosRef" class="mobile-link" to="/recursos-humanos"
+            @click="closeMobileMenu">
+            Recursos Humanos
+          </RouterLink>
+
+          <!-- Controles mobile -->
+          <div class="mobile-controls">
+            <ThemeToggle />
+            <RouterLink v-if="!isLoggedIn" class="mobile-link access" to="/login" @click="closeMobileMenu">
+              Acceder
+            </RouterLink>
+            <span v-if="isLoggedIn" class="mobile-user-info role-badge" :class="userRole">
+              {{ userRole?.toUpperCase() }} - {{ username }}
+            </span>
+            <RouterLink v-if="isLoggedIn" @click="logout; closeMobileMenu()" class="mobile-link logout-btn" to="/">
+              Cerrar sesión
+            </RouterLink>
+          </div>
+        </div>
       </div>
     </nav>
   </header>
@@ -47,12 +92,22 @@ const isLoggedIn = ref(false)
 const username = ref('')
 const isAdminRole = ref(false)
 const userRole = ref('')
+const isMobileMenuOpen = ref(false)
 
 // Computed refs for permissions
 const canAccessFinancieroRef = ref(false)
 const canAccessOperativoRef = ref(false)
 const canAccessProductoRef = ref(false)
 const canAccessRecursosHumanosRef = ref(false)
+
+// Funciones para el menú hamburguesa
+const toggleMobileMenu = () => {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value
+}
+
+const closeMobileMenu = () => {
+  isMobileMenuOpen.value = false
+}
 
 const checkAuthStatus = () => {
   isLoggedIn.value = isTokenValid()
@@ -115,6 +170,20 @@ watch(route, () => {
   height: 60px;
   padding: 0 20px;
   box-shadow: 0 2px 10px rgba(255, 165, 0, 0.2);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.hamburger-menu {
+  display: none;
+}
+
+.mobile-menu {
+  display: none;
 }
 
 .nav-controls {
@@ -192,22 +261,109 @@ watch(route, () => {
 
 @media (max-width: 768px) {
   .navbar {
-    flex-wrap: wrap;
-    height: auto;
-    padding: 10px;
+    height: 70px;
+    padding: 0 15px;
+    justify-content: space-between;
   }
 
-  .nav-controls {
-    gap: 10px;
+  .desktop-nav {
+    display: none;
   }
 
-  .link-navbar {
-    font-size: 1rem;
-    padding: 8px;
+  .hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    width: 30px;
+    height: 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1001;
+  }
+
+  .hamburger-menu span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: #FFA500;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger-menu.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+  }
+
+  .hamburger-menu.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger-menu.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+  }
+
+  .mobile-menu {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 70px);
+    background-color: #031633;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 999;
+    overflow-y: auto;
+    display: block !important;
+  }
+
+  .mobile-menu.active {
+    transform: translateX(0);
+  }
+
+  .mobile-menu-content {
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .mobile-link {
+    color: #f0f0f0;
+    text-decoration: none;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255, 165, 0, 0.2);
+  }
+
+  .mobile-link:hover {
+    background-color: rgba(255, 165, 0, 0.1);
+    color: #FFA500;
+  }
+
+  .mobile-controls {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid rgba(255, 165, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .mobile-user-info {
+    text-align: center;
+    padding: 1rem;
+    margin: 0.5rem 0;
   }
 
   .home {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 }
 </style>

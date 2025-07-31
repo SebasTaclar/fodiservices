@@ -68,7 +68,8 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -77,8 +78,10 @@
   position: relative;
   z-index: 1;
   font-family: 'Montserrat', sans-serif;
-
-
+  width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .hero-container {
@@ -90,11 +93,16 @@
   gap: 4rem;
   align-items: center;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .hero-content {
   color: white;
   z-index: 2;
+  text-align: left;
+  padding-left: 0;
+  margin-left: 20rem;
 }
 
 .hero-title {
@@ -119,7 +127,8 @@
   display: flex;
   gap: 1rem;
   margin-bottom: 2.5rem;
-  text-align: center;
+  text-align: left;
+  justify-content: flex-start;
 }
 
 .tag {
@@ -163,6 +172,8 @@ a {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .contact-item {
@@ -192,12 +203,15 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .images-container {
   position: relative;
   width: 100%;
   height: 100%;
+  max-width: 100%;
 }
 
 .image-circle {
@@ -221,28 +235,28 @@ a {
   object-fit: cover;
 }
 
-/* Posicionamiento específico de las imágenes */
+/* Posicionamiento original de las imágenes para desktop */
 .image-1 {
-  width: 280px;  /* Aumentado 30% + extra */
-  height: 280px;
+  width: 320px;
+  height: 320px;
   top: 5%;
-  right: 45%;
+  right: 50%;
   animation: float1 6s ease-in-out infinite;
 }
 
 .image-2 {
-  width: 300px;  /* Aumentado 30% + extra */
-  height: 300px;
+  width: 340px;
+  height: 340px;
   top: 25%;
-  right:1%;
+  right: 10%;
   animation: float2 8s ease-in-out infinite;
 }
 
 .image-3 {
-  width: 260px;  /* Aumentado 30% + extra */
-  height: 260px;
+  width: 300px;
+  height: 300px;
   bottom: 10%;
-  right: 35%;
+  right: 40%;
   animation: float3 7s ease-in-out infinite;
 }
 
@@ -326,13 +340,19 @@ a {
 }
 
 @media (max-width: 1024px) {
+  .hero {
+    min-height: auto;
+    max-height: none;
+    padding: 2rem 0;
+  }
+
   .hero-container {
     grid-template-columns: 1fr;
     gap: 2rem;
     padding: 2rem 1rem;
     text-align: center;
     justify-items: center;
-    margin-top: 3rem;
+    margin-top: 2rem;
   }
 
   .desktop-only {
@@ -369,37 +389,54 @@ a {
   }
 
   .hero-visual {
-    height: auto;
-    padding: 1.5rem 0;
+    height: 300px;
+    padding: 1rem 0;
   }
 
+  /* Mantener el triángulo en tablets */
   .images-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
-    justify-content: center;
-    align-items: center;
-    max-width: 600px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 400px;
     margin: 0 auto;
   }
 
   .image-circle {
-    position: static;
-    width: 180px !important;
-    height: 180px !important;
+    position: absolute;
     animation: none !important;
-    margin: 0;
   }
 
-  .images-container {
-    gap: 1rem;
-    padding: 1rem;
+  .image-1 {
+    width: 120px !important;
+    height: 120px !important;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .image-2 {
+    width: 100px !important;
+    height: 100px !important;
+    bottom: 0;
+    left: 20%;
+  }
+
+  .image-3 {
+    width: 100px !important;
+    height: 100px !important;
+    bottom: 0;
+    right: 20%;
   }
 }
 
 @media (max-width: 600px) {
+  .hero {
+    padding: 1rem 0 2rem 0;
+  }
+
   .hero-title h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     line-height: 1.3;
   }
 
@@ -419,20 +456,41 @@ a {
     justify-content: center;
   }
 
-  .image-circle {
-    width: 140px !important;
-    height: 140px !important;
+  .hero-visual {
+    height: 250px;
+    padding: 0.5rem 0;
   }
 
   .images-container {
-    gap: 0.5rem;
-    max-width: 450px;
-    padding: 0.5rem;
+    max-width: 280px;
   }
 
-  .hero {
-    height: auto;
-    padding-bottom: 3rem;
+  /* Triángulo más compacto para móviles */
+  .image-1 {
+    width: 90px !important;
+    height: 90px !important;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .image-2 {
+    width: 80px !important;
+    height: 80px !important;
+    bottom: 0;
+    left: 15%;
+  }
+
+  .image-3 {
+    width: 80px !important;
+    height: 80px !important;
+    bottom: 0;
+    right: 15%;
+  }
+
+  .hero-container {
+    padding: 1rem;
+    margin-top: 1rem;
   }
 }
 </style>

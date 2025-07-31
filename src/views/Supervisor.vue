@@ -90,7 +90,7 @@
                 <div class="mobile-info-row">
                   <span class="mobile-label">Turno:</span>
                   <span class="mobile-shift-badge" :class="entry.shift">{{ entry.shift === 'am' ? 'Mañana' : 'Tarde'
-                    }}</span>
+                  }}</span>
                 </div>
               </div>
 
@@ -475,13 +475,17 @@ const rejectEntry = (entryId: number) => {
 <style scoped>
 .supervisor-container {
   padding: 2rem;
-  padding-top: 80px;
-  /* Offset para navbar fija */
+  padding-top: 120px;
+  /* Offset aumentado para navbar fija y menú hamburguesa */
   background-color: var(--bg-color, #f8f9fa);
   color: var(--text-color, #031633);
   min-height: 100vh;
   font-family: 'Montserrat', sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .page-header {
@@ -740,6 +744,10 @@ const rejectEntry = (entryId: number) => {
 @media (max-width: 768px) {
   .supervisor-container {
     padding: 1rem;
+    padding-top: 140px;
+    /* Padding superior mayor para mobile con menú hamburguesa */
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 
   .dashboard-grid {
@@ -772,6 +780,10 @@ const rejectEntry = (entryId: number) => {
   box-shadow: 0 8px 32px rgba(3, 22, 51, 0.1);
   border: 1px solid var(--border-color, rgba(255, 165, 0, 0.15));
   transition: background-color 0.3s ease, color 0.3s ease;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .approval-card h3 {
@@ -784,15 +796,21 @@ const rejectEntry = (entryId: number) => {
 }
 
 .table-container {
-  overflow-x: auto;
+  width: 100%;
+  max-width: 100%;
   border-radius: 12px;
   border: 1px solid var(--border-color, rgba(255, 165, 0, 0.2));
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .approval-table {
   width: 100%;
+  max-width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  table-layout: fixed;
+  box-sizing: border-box;
 }
 
 .approval-table thead {
@@ -802,20 +820,86 @@ const rejectEntry = (entryId: number) => {
 
 .approval-table th,
 .approval-table td {
-  padding: 0 0.75rem;
+  padding: 0 0.5rem;
   text-align: left;
   border-bottom: 1px solid var(--border-color, rgba(255, 165, 0, 0.1));
   vertical-align: middle;
-  height: 60px;
+  height: 50px;
   display: table-cell;
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
+
+/* Definir anchos específicos para las columnas - Optimizados */
+.approval-table th:nth-child(1),
+.approval-table td:nth-child(1) {
+  width: 16%;
+  max-width: 16%;
+}
+
+/* Empleado */
+.approval-table th:nth-child(2),
+.approval-table td:nth-child(2) {
+  width: 8%;
+  max-width: 8%;
+}
+
+/* Rol */
+.approval-table th:nth-child(3),
+.approval-table td:nth-child(3) {
+  width: 13%;
+  max-width: 13%;
+}
+
+/* Fecha/Hora */
+.approval-table th:nth-child(4),
+.approval-table td:nth-child(4) {
+  width: 11%;
+  max-width: 11%;
+}
+
+/* Tipo Producto */
+.approval-table th:nth-child(5),
+.approval-table td:nth-child(5) {
+  width: 9%;
+  max-width: 9%;
+}
+
+/* Cantidad */
+.approval-table th:nth-child(6),
+.approval-table td:nth-child(6) {
+  width: 8%;
+  max-width: 8%;
+}
+
+/* Turno */
+.approval-table th:nth-child(7),
+.approval-table td:nth-child(7) {
+  width: 9%;
+  max-width: 9%;
+}
+
+/* Estado */
+.approval-table th:nth-child(8),
+.approval-table td:nth-child(8) {
+  width: 16%;
+  max-width: 16%;
+}
+
+/* Acciones */
 
 .approval-table th {
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 1rem 0.75rem;
+  letter-spacing: 0.3px;
+  padding: 0.8rem 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .table-row {
@@ -838,45 +922,65 @@ const rejectEntry = (entryId: number) => {
 .employee-name {
   font-weight: 600;
   color: var(--text-color, #031633);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .role-badge {
   background-color: var(--card-bg, rgba(255, 165, 0, 0.1));
-  padding: 0.3rem 0.6rem;
-  border-radius: 12px;
-  font-size: 0.8rem;
+  padding: 0.15rem 0.3rem;
+  border-radius: 6px;
+  font-size: 0.6rem;
   font-weight: 500;
   border: 1px solid rgba(255, 165, 0, 0.3);
   color: var(--text-color, #031633);
   text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
 }
 
 .date-time {
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: var(--text-secondary, #666);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .product-type {
   background-color: var(--card-bg, rgba(255, 165, 0, 0.1));
-  padding: 0.3rem 0.6rem;
-  border-radius: 12px;
-  font-size: 0.8rem;
+  padding: 0.15rem 0.3rem;
+  border-radius: 6px;
+  font-size: 0.6rem;
   font-weight: 500;
   border: 1px solid rgba(255, 165, 0, 0.3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
 }
 
 .quantity {
   font-weight: 600;
   color: var(--text-color, #031633);
+  font-size: 0.75rem;
+  white-space: nowrap;
 }
 
 .shift-badge {
-  padding: 0.3rem 0.6rem;
-  border-radius: 12px;
-  font-size: 0.75rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 8px;
+  font-size: 0.65rem;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .shift-badge.am {
@@ -890,11 +994,12 @@ const rejectEntry = (entryId: number) => {
 }
 
 .status-badge {
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.65rem;
   font-weight: 600;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .status-badge.pending {
@@ -914,29 +1019,33 @@ const rejectEntry = (entryId: number) => {
 
 .actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.2rem;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   height: 100%;
   padding: 0;
   margin: 0;
+  flex-wrap: wrap;
 }
 
 .approve-btn,
 .reject-btn {
   background-color: var(--card-bg, rgba(255, 165, 0, 0.1));
-  padding: 0.3rem 0.6rem;
+  padding: 0.3rem 0.4rem;
   border: 1px solid rgba(255, 165, 0, 0.3);
-  border-radius: 12px;
+  border-radius: 6px;
   font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
-  line-height: 1.2;
+  line-height: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--text-color, #031633);
+  min-width: 24px;
+  height: 24px;
+  flex-shrink: 0;
 }
 
 .approve-btn:hover,
@@ -949,13 +1058,15 @@ const rejectEntry = (entryId: number) => {
 .action-completed {
   font-size: 0.8rem;
   font-weight: 600;
-  padding: 0.3rem 0.6rem;
-  border-radius: 12px;
+  padding: 0.3rem 0.4rem;
+  border-radius: 6px;
   background-color: var(--card-bg, rgba(255, 165, 0, 0.1));
-  line-height: 1.2;
+  line-height: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-width: 24px;
+  height: 24px;
 }
 
 @media (max-width: 1024px) {
@@ -965,18 +1076,83 @@ const rejectEntry = (entryId: number) => {
 
   .approval-table th,
   .approval-table td {
-    padding: 0.75rem 0.5rem;
+    padding: 0.5rem 0.3rem;
+    height: 50px;
+  }
+
+  .approval-table th {
+    font-size: 0.75rem;
+  }
+
+  /* Ajustar anchos para pantallas medianas */
+  .approval-table th:nth-child(1),
+  .approval-table td:nth-child(1) {
+    width: 14%;
+  }
+
+  /* Empleado */
+  .approval-table th:nth-child(2),
+  .approval-table td:nth-child(2) {
+    width: 8%;
+  }
+
+  /* Rol */
+  .approval-table th:nth-child(3),
+  .approval-table td:nth-child(3) {
+    width: 14%;
+  }
+
+  /* Fecha/Hora */
+  .approval-table th:nth-child(4),
+  .approval-table td:nth-child(4) {
+    width: 10%;
+  }
+
+  /* Tipo Producto */
+  .approval-table th:nth-child(5),
+  .approval-table td:nth-child(5) {
+    width: 8%;
+  }
+
+  /* Cantidad */
+  .approval-table th:nth-child(6),
+  .approval-table td:nth-child(6) {
+    width: 8%;
+  }
+
+  /* Turno */
+  .approval-table th:nth-child(7),
+  .approval-table td:nth-child(7) {
+    width: 8%;
+  }
+
+  /* Estado */
+  .approval-table th:nth-child(8),
+  .approval-table td:nth-child(8) {
+    width: 20%;
+  }
+
+  /* Acciones */
+
+  .employee-name {
+    font-size: 0.8rem;
+  }
+
+  .date-time {
+    font-size: 0.7rem;
   }
 
   .actions {
     flex-direction: column;
-    gap: 0.3rem;
+    gap: 0.2rem;
   }
 
   .approve-btn,
   .reject-btn {
-    font-size: 0.7rem;
-    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.5rem;
+    min-width: 25px;
+    height: 25px;
   }
 }
 

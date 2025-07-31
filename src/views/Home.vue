@@ -36,12 +36,19 @@ defineOptions({
 .home-main {
   padding-top: 60px;
   background-color: transparent;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .section {
   padding: 0.1px 0 0 0;
   border-bottom: 1px solid #ccc;
   /* Light gray color for separation */
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .section:last-child {
