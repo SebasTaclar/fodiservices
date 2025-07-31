@@ -222,26 +222,26 @@ a {
 
 /* Posicionamiento específico de las imágenes */
 .image-1 {
-  width: 234px;  /* 180px + 30% */
-  height: 234px;
-  top: 10%;
-  right: 55%;
+  width: 280px;  /* Aumentado 30% + extra */
+  height: 280px;
+  top: 5%;
+  right: 45%;
   animation: float1 6s ease-in-out infinite;
 }
 
 .image-2 {
-  width: 260px;  /* 200px + 30% */
-  height: 260px;
-  top: 20%;
-  right: 5%;
+  width: 300px;  /* Aumentado 30% + extra */
+  height: 300px;
+  top: 25%;
+  right:1%;
   animation: float2 8s ease-in-out infinite;
 }
 
 .image-3 {
-  width: 208px;  /* 160px + 30% */
-  height: 208px;
-  bottom: 20%;
-  right: 45%;
+  width: 260px;  /* Aumentado 30% + extra */
+  height: 260px;
+  bottom: 10%;
+  right: 35%;
   animation: float3 7s ease-in-out infinite;
 }
 
@@ -384,10 +384,15 @@ a {
 
   .image-circle {
     position: static;
-    width: 160px !important;
-    height: 160px !important;
+    width: 180px !important;
+    height: 180px !important;
     animation: none !important;
     margin: 0;
+  }
+
+  .images-container {
+    gap: 1rem;
+    padding: 1rem;
   }
 }
 
@@ -414,13 +419,14 @@ a {
   }
 
   .image-circle {
-    width: 120px !important;
-    height: 120px !important;
+    width: 140px !important;
+    height: 140px !important;
   }
 
   .images-container {
-    gap: 0.25rem;
-    max-width: 400px;
+    gap: 0.5rem;
+    max-width: 450px;
+    padding: 0.5rem;
   }
 
   .hero {
