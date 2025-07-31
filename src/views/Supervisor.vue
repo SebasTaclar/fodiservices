@@ -90,7 +90,7 @@
                 <div class="mobile-info-row">
                   <span class="mobile-label">Turno:</span>
                   <span class="mobile-shift-badge" :class="entry.shift">{{ entry.shift === 'am' ? 'Mañana' : 'Tarde'
-                  }}</span>
+                    }}</span>
                 </div>
               </div>
 
@@ -744,8 +744,8 @@ const rejectEntry = (entryId: number) => {
 @media (max-width: 768px) {
   .supervisor-container {
     padding: 1rem;
-    padding-top: 140px;
-    /* Padding superior mayor para mobile con menú hamburguesa */
+    padding-top: 110px;
+    /* Padding superior para mobile con menú hamburguesa */
     max-width: 100vw;
     overflow-x: hidden;
   }

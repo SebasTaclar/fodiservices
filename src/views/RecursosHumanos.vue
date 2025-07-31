@@ -508,6 +508,8 @@ defineOptions({
 @media (max-width: 768px) {
  .rrhh-container {
   padding: 1rem;
+  padding-top: 110px;
+  /* Padding superior para mobile con menú hamburguesa */
  }
 
  .dashboard-grid {

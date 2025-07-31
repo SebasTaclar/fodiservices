@@ -1059,6 +1059,12 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
+  .producto-container {
+    padding: 1rem;
+    padding-top: 110px;
+    /* Padding superior para mobile con menú hamburguesa */
+  }
+
   .chart-layout {
     grid-template-columns: 1fr;
   }
@@ -1399,10 +1405,6 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .producto-container {
-    padding: 1rem;
-  }
-
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
