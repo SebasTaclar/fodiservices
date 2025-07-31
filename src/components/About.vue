@@ -3,22 +3,24 @@
     <div class="about-bg">
       <div class="floating-shapes shape-1"></div>
       <div class="floating-shapes shape-2"></div>
-    </div>   
+    </div>
     <div class="section-container">
       <div class="about-content">
         <div class="about-text">
           <h2>¿Por qué elegirnos?</h2>
           <p>
-            En FODISERVICES, combinamos la experiencia de más de una década 
-            con tecnología de vanguardia para ofrecer soluciones de outsourcing 
+            En FODISERVICES, combinamos la experiencia de más de una década
+            con tecnología de vanguardia para ofrecer soluciones de outsourcing
             que realmente transforman tu negocio.
           </p>
           <p>
-            Nuestra empresa competitiva y destacada en el mercado del OutSourcing (Tercerización de procesos industriales), por sus altos estándares de calidad, responsabilidad y cumplimiento oportuno a nuestros clientes.
+            Nuestra empresa competitiva y destacada en el mercado del OutSourcing (Tercerización de procesos
+            industriales), por sus altos estándares de calidad, responsabilidad y cumplimiento oportuno a nuestros
+            clientes.
           </p>
           <p>
-            Trabajamos bajo los más altos estándares de calidad y seguridad, 
-            adaptándonos a las necesidades específicas de cada industria y 
+            Trabajamos bajo los más altos estándares de calidad y seguridad,
+            adaptándonos a las necesidades específicas de cada industria y
             manteniendo siempre el foco en el crecimiento de tu empresa.
           </p>
         </div>
@@ -40,12 +42,14 @@
             <span class="stat-label">Soporte Técnico</span>
           </div>
         </div>
-        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
+
+defineOptions({ name: 'AboutSection' });
 
 import { onMounted, ref } from 'vue';
 
@@ -63,7 +67,7 @@ function resetStats() {
 function animateStats() {
   const numbers = document.querySelectorAll<HTMLElement>('.stat-number');
 
-  numbers.forEach((el, i) => {
+  numbers.forEach((el) => {
     const fixed = el.dataset.fixed;
     if (fixed) {
       el.innerText = fixed;
@@ -123,125 +127,135 @@ onMounted(() => {
 }
 
 .about-section {
-    background: linear-gradient(135deg, #031633 0%, #031633 100%);
-    padding: 5rem 2rem;
-    position: relative;
-    color: white;
+  background: linear-gradient(135deg, #031633 0%, #031633 100%);
+  padding: 5rem 2rem;
+  position: relative;
+  color: white;
 }
 
 .about-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .floating-shapes {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            opacity: 0.1;
-        }
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  opacity: 0.1;
+}
 
-        .shape-1 {
-            top: 10%;
-            left: 10%;
-            background: #ffa000;
-            border-radius: 50% 0 50% 0;
-            animation: float 6s ease-in-out infinite;
-        }
+.shape-1 {
+  top: 10%;
+  left: 10%;
+  background: #ffa000;
+  border-radius: 50% 0 50% 0;
+  animation: float 6s ease-in-out infinite;
+}
 
-        .shape-2 {
-            top: 60%;
-            right: 15%;
-            background: #ff8f00;
-            border-radius: 0 50% 0 50%;
-            animation: float 8s ease-in-out infinite reverse;
-        }
+.shape-2 {
+  top: 60%;
+  right: 15%;
+  background: #ff8f00;
+  border-radius: 0 50% 0 50%;
+  animation: float 8s ease-in-out infinite reverse;
+}
 
 .about-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
 }
 
 .about-text h2 {
-    font-size: 2.5rem;
-    font-weight: 900;
-    margin-bottom: 2rem;
-    color: #ffa000;
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 2rem;
+  color: #ffa000;
 }
 
 .about-text p {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-    opacity: 0.9;
-    text-align: justify;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+  text-align: justify;
 }
 
 .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
 }
 
 .stat-item {
-    text-align: center;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 160, 0, 0.3);
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 160, 0, 0.3);
 }
 
 .stat-number {
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: #ffa000;
-    display: block;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #ffa000;
+  display: block;
 }
 
 .stat-label {
-    font-size: 1rem;
-    opacity: 0.8;
+  font-size: 1rem;
+  opacity: 0.8;
 }
 
 
 /* ANIMACIONES */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
+@keyframes float {
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
 
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
+}
 
-        /* 📱 Responsive para pantallas medianas y pequeñas */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 📱 Responsive para pantallas medianas y pequeñas */
 @media (max-width: 1024px) {
   .about-content {
-    grid-template-columns: 1fr; /* Cambia a una sola columna */
+    grid-template-columns: 1fr;
+    /* Cambia a una sola columna */
     gap: 3rem;
     text-align: center;
   }
@@ -255,13 +269,15 @@ onMounted(() => {
   }
 
   .stats-grid {
-    grid-template-columns: 1fr 1fr; /* 2 columnas en tablets */
+    grid-template-columns: 1fr 1fr;
+    /* 2 columnas en tablets */
   }
 }
 
 @media (max-width: 768px) {
   .stats-grid {
-    grid-template-columns: 1fr; /* 1 columna en celulares */
+    grid-template-columns: 1fr;
+    /* 1 columna en celulares */
   }
 
   .stat-item {
@@ -277,7 +293,8 @@ onMounted(() => {
   }
 
   .floating-shapes {
-    display: none; /* Oculta decoraciones en móviles */
+    display: none;
+    /* Oculta decoraciones en móviles */
   }
 
   .about-section {

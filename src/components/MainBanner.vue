@@ -20,7 +20,7 @@
       <div class="hero-content">
         <div class="hero-title">
           <h1>EXPERTOS EN
-          OUTSOURCING</h1>
+            OUTSOURCING</h1>
         </div>
 
         <div class="hero-tags">
@@ -49,7 +49,8 @@
 
 
 .hero {
-  background-image: url('/public/images/fondos_geometrico_2.png'); /* cambia según tu ruta */
+  background-image: url('/images/fondos_geometrico_2.png');
+  /* Ruta corregida */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
