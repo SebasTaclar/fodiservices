@@ -1,6 +1,21 @@
 <template>
   <section class="hero">
     <div class="hero-container">
+      <!-- Lado derecho con imágenes circulares -->
+      <div class="hero-visual">
+        <div class="images-container">
+          <div class="image-circle image-1">
+            <img src="/images/mainBanner5.jpg" alt="FODISERVICES - Outsourcing profesional">
+          </div>
+          <div class="image-circle image-2">
+            <img src="/images/tornillos.jpg" alt="FODISERVICES - Equipo experto">
+          </div>
+          <div class="image-circle image-3">
+            <img src="/images/mainBanner4.jpg" alt="FODISERVICES - Soluciones innovadoras">
+          </div>
+        </div>
+      </div>
+
       <!-- Lado izquierdo con contenido -->
       <div class="hero-content">
         <div class="hero-title">
@@ -17,21 +32,6 @@
         <div class="hero-contact">
           <div class="contact-item">
             <a href="#offerings" class="contact-button">CONOCE MAS</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Lado derecho con imágenes circulares -->
-      <div class="hero-visual">
-        <div class="images-container">
-          <div class="image-circle image-1">
-            <img src="/images/mainBanner5.jpg" alt="FODISERVICES - Outsourcing profesional">
-          </div>
-          <div class="image-circle image-2">
-            <img src="/images/tornillos.jpg" alt="FODISERVICES - Equipo experto">
-          </div>
-          <div class="image-circle image-3">
-            <img src="/images/mainBanner4.jpg" alt="FODISERVICES - Soluciones innovadoras">
           </div>
         </div>
       </div>
@@ -62,7 +62,7 @@
   position: relative;
   z-index: 1;
   font-family: 'Montserrat', sans-serif;
-  
+
 
 }
 
