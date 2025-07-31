@@ -429,10 +429,16 @@ const handleChartMouseMove = (event: MouseEvent) => {
 
   const canvas = chartCanvas.value
   const rect = canvas.getBoundingClientRect()
-  const x = event.clientX - rect.left
-  const y = event.clientY - rect.top
 
-  const padding = 70
+  // Calcular la escala del canvas para corregir coordenadas en mobile
+  const scaleX = canvas.width / rect.width
+  const scaleY = canvas.height / rect.height
+
+  const x = (event.clientX - rect.left) * scaleX
+  const y = (event.clientY - rect.top) * scaleY
+
+  const isMobile = window.innerWidth <= 768
+  const padding = isMobile ? 50 : 70
   const chartWidth = canvas.width - 2 * padding
   const data = chartData.value
 
@@ -447,12 +453,24 @@ const handleChartMouseMove = (event: MouseEvent) => {
       const pointX = padding + (dayIndex / (data.length - 1)) * chartWidth
       const distance = Math.abs(x - pointX)
 
-      // Solo mostrar tooltip si el mouse está cerca del punto (dentro de 20px)
-      if (distance <= 20) {
+      // Área de detección más grande en mobile para facilitar el touch
+      const detectionRadius = isMobile ? 35 : 20
+
+      // Solo mostrar tooltip si el mouse está cerca del punto
+      if (distance <= detectionRadius) {
         hoveredPoint.value = dayIndex
         tooltip.visible = true
-        tooltip.x = rect.left + pointX + 10
-        tooltip.y = rect.top + y - 50
+
+        // Posición del tooltip ajustada para mobile
+        if (isMobile) {
+          // En mobile, centrar el tooltip y ajustar la altura
+          tooltip.x = rect.left + canvas.offsetWidth / 2 - 75 // Centrado aproximadamente
+          tooltip.y = rect.top + 20 // Más arriba para evitar obstrucción
+        } else {
+          tooltip.x = rect.left + (pointX / scaleX) + 10
+          tooltip.y = rect.top + (y / scaleY) - 50
+        }
+
         tooltip.day = dayIndex + 1
         tooltip.value = data[dayIndex]
 
@@ -516,7 +534,10 @@ const drawChart = () => {
   const data = getMonthlyData()
   chartData.value = data // Almacenar datos para interactividad
   const maxValue = Math.max(...data, 50) // Minimum scale of 50
-  const padding = 70
+
+  // Detect mobile and adjust padding accordingly
+  const isMobile = window.innerWidth <= 768
+  const padding = isMobile ? 50 : 70
   const chartWidth = canvas.width - 2 * padding
   const chartHeight = canvas.height - 2 * padding
 
@@ -600,20 +621,23 @@ const drawChart = () => {
 
   // Draw labels
   ctx.fillStyle = colors.text
-  ctx.font = '11px "Montserrat", sans-serif'
+  ctx.font = isMobile ? '10px "Montserrat", sans-serif' : '11px "Montserrat", sans-serif'
   ctx.textAlign = 'center'
 
-  // X-axis labels (days) - mostrar más días para mejor referencia
-  for (let i = 0; i < data.length; i += 3) { // Mostrar cada 3 días
+  // X-axis labels (days) - ajustar para mobile
+  const dayStep = isMobile ? 4 : 3 // Mostrar cada 4 días en mobile para mejor espaciado
+  for (let i = 0; i < data.length; i += dayStep) {
     const x = padding + (i / (data.length - 1)) * chartWidth
-    ctx.fillText((i + 1).toString(), x, padding + chartHeight + 20)
+    const labelY = padding + chartHeight + (isMobile ? 18 : 20)
+    ctx.fillText((i + 1).toString(), x, labelY)
   }
 
   // Mostrar también el último día
   if (data.length > 1) {
     const lastIndex = data.length - 1
     const x = padding + (lastIndex / (data.length - 1)) * chartWidth
-    ctx.fillText((lastIndex + 1).toString(), x, padding + chartHeight + 20)
+    const labelY = padding + chartHeight + (isMobile ? 18 : 20)
+    ctx.fillText((lastIndex + 1).toString(), x, labelY)
   }
 
   // Y-axis labels (quantities)
@@ -621,17 +645,19 @@ const drawChart = () => {
   for (let i = 0; i <= 5; i++) {
     const y = padding + (i / 5) * chartHeight + 4
     const value = Math.round(maxValue * (5 - i) / 5)
-    ctx.fillText(value.toString(), padding - 10, y)
+    const labelX = padding - (isMobile ? 10 : 10)
+    ctx.fillText(value.toString(), labelX, y)
   }
 
   // Chart title
   ctx.fillStyle = colors.title
-  ctx.font = 'bold 18px "Montserrat", sans-serif'
+  ctx.font = isMobile ? 'bold 14px "Montserrat", sans-serif' : 'bold 18px "Montserrat", sans-serif'
   ctx.textAlign = 'center'
-  ctx.fillText('Unidades de Producción Diaria', canvas.width / 2, 30)
+  const titleY = isMobile ? 25 : 30
+  ctx.fillText(isMobile ? 'Producción Diaria' : 'Unidades de Producción Diaria', canvas.width / 2, titleY)
 
   // Axis labels
-  ctx.font = '14px "Montserrat", sans-serif'
+  ctx.font = isMobile ? '11px "Montserrat", sans-serif' : '14px "Montserrat", sans-serif'
 
   // X-axis label con mes actual
   const monthNames = [
@@ -640,16 +666,18 @@ const drawChart = () => {
   ]
   const currentDate = new Date()
   const currentMonth = monthNames[currentDate.getMonth()]
-  ctx.fillText(`Días del mes de ${currentMonth}`, canvas.width / 2, canvas.height - 10)
+  const xAxisLabel = isMobile ? `${currentMonth} 2025` : `Días del mes de ${currentMonth}`
+  ctx.fillText(xAxisLabel, canvas.width / 2, canvas.height - 10)
 
   // Y-axis label con mejor estilo
   ctx.save()
   ctx.translate(25, canvas.height / 2)
   ctx.rotate(-Math.PI / 2)
-  ctx.font = 'bold 13px "Montserrat", sans-serif'
+  ctx.font = isMobile ? 'bold 10px "Montserrat", sans-serif' : 'bold 13px "Montserrat", sans-serif'
   ctx.fillStyle = colors.text
   ctx.textAlign = 'center'
-  ctx.fillText('Cantidad de Unidades', 0, 0)
+  const yAxisLabel = isMobile ? 'Unidades' : 'Cantidad de Unidades'
+  ctx.fillText(yAxisLabel, 0, 0)
   ctx.restore()
 }
 
@@ -673,6 +701,45 @@ onMounted(() => {
     attributes: true,
     attributeFilter: ['data-theme']
   })
+
+  // Mobile-specific tooltip hiding events
+  if (window.innerWidth <= 768) {
+    // Hide tooltip on scroll
+    const hideTooltipOnScroll = () => {
+      if (tooltip.visible) {
+        tooltip.visible = false
+        hoveredPoint.value = -1
+        drawChart()
+      }
+    }
+
+    // Hide tooltip on click outside chart
+    const hideTooltipOnClick = (event: Event) => {
+      if (!chartCanvas.value) return
+
+      const target = event.target as HTMLElement
+      if (!chartCanvas.value.contains(target) && tooltip.visible) {
+        tooltip.visible = false
+        hoveredPoint.value = -1
+        drawChart()
+      }
+    }
+
+    // Add event listeners for mobile only
+    window.addEventListener('scroll', hideTooltipOnScroll, { passive: true })
+    document.addEventListener('touchstart', hideTooltipOnClick, { passive: true })
+    document.addEventListener('click', hideTooltipOnClick)
+
+    // Cleanup function for mobile events
+    const cleanup = () => {
+      window.removeEventListener('scroll', hideTooltipOnScroll)
+      document.removeEventListener('touchstart', hideTooltipOnClick)
+      document.removeEventListener('click', hideTooltipOnClick)
+    }
+
+      // Store cleanup function for potential unmount
+      ; (window as any).__mobileTooltipCleanup = cleanup
+  }
 })
 </script>
 
@@ -1521,6 +1588,22 @@ onMounted(() => {
   transform: translateX(-50%);
   border: 6px solid transparent;
   border-top-color: var(--tooltip-bg);
+}
+
+/* Mobile tooltip adjustments */
+@media (max-width: 768px) {
+  .chart-tooltip {
+    padding: 14px 18px;
+    font-size: 14px;
+    border-radius: 10px;
+    min-width: 150px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  }
+
+  .chart-tooltip::after {
+    border-width: 8px;
+  }
 }
 
 .tooltip-content {
