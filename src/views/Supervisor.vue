@@ -44,13 +44,13 @@
                 </td>
                 <td class="actions">
                   <button v-if="entry.status === 'pending'" @click="approveEntry(entry.id)" class="approve-btn">
-                    ✅ Aprobar
+                    ✓
                   </button>
                   <button v-if="entry.status === 'pending'" @click="rejectEntry(entry.id)" class="reject-btn">
-                    ❌ Rechazar
+                    ✕
                   </button>
                   <span v-if="entry.status !== 'pending'" class="action-completed">
-                    {{ entry.status === 'approved' ? '✅ Aprobado' : '❌ Rechazado' }}
+                    {{ entry.status === 'approved' ? '✓' : '✕' }}
                   </span>
                 </td>
               </tr>
@@ -794,30 +794,18 @@ const rejectEntry = (entryId: number) => {
 }
 
 .role-badge {
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.7rem;
-  font-weight: 600;
+  background-color: var(--card-bg, rgba(255, 165, 0, 0.1));
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid rgba(255, 165, 0, 0.3);
+  color: var(--text-color, #031633);
   text-transform: uppercase;
 }
 
-.role-badge.admin {
-  background-color: #e74c3c;
-  color: white;
-}
-
-.role-badge.supervisor {
-  background-color: #3498db;
-  color: white;
-}
-
-.role-badge.empleado {
-  background-color: #28a745;
-  color: white;
-}
-
 .date-time {
-  font-family: 'Courier New', monospace;
+  font-family: 'Montserrat', sans-serif;
   font-size: 0.8rem;
   color: var(--text-secondary, #666);
 }
@@ -888,39 +876,26 @@ const rejectEntry = (entryId: number) => {
 
 .approve-btn,
 .reject-btn {
-  padding: 0.4rem 0.8rem;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 600;
+  background-color: var(--card-bg, rgba(255, 165, 0, 0.1));
+  padding: 0.3rem 0.6rem;
+  border: 1px solid rgba(255, 165, 0, 0.3);
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
   line-height: 1.2;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  color: var(--text-color, #031633);
 }
 
-.approve-btn {
-  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-  color: white;
-}
-
-.approve-btn:hover {
-  background: linear-gradient(135deg, #20c997 0%, #17a2b8 100%);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
-}
-
-.reject-btn {
-  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-  color: white;
-}
-
+.approve-btn:hover,
 .reject-btn:hover {
-  background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+  background-color: rgba(255, 165, 0, 0.2);
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+  box-shadow: 0 2px 4px rgba(255, 165, 0, 0.3);
 }
 
 .action-completed {
