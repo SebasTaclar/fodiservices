@@ -1,26 +1,25 @@
 <template>
   <section class="hero">
     <div class="hero-container">
-      <!-- Lado derecho con imágenes circulares -->
-      <div class="hero-visual">
-        <div class="images-container">
-          <div class="image-circle image-1">
-            <img src="/images/mainBanner5.jpg" alt="FODISERVICES - Outsourcing profesional">
-          </div>
-          <div class="image-circle image-2">
-            <img src="/images/tornillos.jpg" alt="FODISERVICES - Equipo experto">
-          </div>
-          <div class="image-circle image-3">
-            <img src="/images/mainBanner4.jpg" alt="FODISERVICES - Soluciones innovadoras">
-          </div>
-        </div>
-      </div>
-
       <!-- Lado izquierdo con contenido -->
       <div class="hero-content">
         <div class="hero-title">
           <h1>EXPERTOS EN
           OUTSOURCING</h1>
+        </div>
+
+        <div class="hero-visual mobile-order">
+          <div class="images-container">
+            <div class="image-circle image-1">
+              <img src="/images/mainBanner5.jpg" alt="FODISERVICES - Outsourcing profesional">
+            </div>
+            <div class="image-circle image-2">
+              <img src="/images/tornillos.jpg" alt="FODISERVICES - Equipo experto">
+            </div>
+            <div class="image-circle image-3">
+              <img src="/images/mainBanner4.jpg" alt="FODISERVICES - Soluciones innovadoras">
+            </div>
+          </div>
         </div>
 
         <div class="hero-tags">
@@ -32,6 +31,21 @@
         <div class="hero-contact">
           <div class="contact-item">
             <a href="#offerings" class="contact-button">CONOCE MAS</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lado derecho con imágenes circulares para desktop -->
+      <div class="hero-visual desktop-only">
+        <div class="images-container">
+          <div class="image-circle image-1">
+            <img src="/images/mainBanner5.jpg" alt="FODISERVICES - Outsourcing profesional">
+          </div>
+          <div class="image-circle image-2">
+            <img src="/images/tornillos.jpg" alt="FODISERVICES - Equipo experto">
+          </div>
+          <div class="image-circle image-3">
+            <img src="/images/mainBanner4.jpg" alt="FODISERVICES - Soluciones innovadoras">
           </div>
         </div>
       </div>
@@ -208,26 +222,26 @@ a {
 
 /* Posicionamiento específico de las imágenes */
 .image-1 {
-  width: 180px;
-  height: 180px;
+  width: 234px;  /* 180px + 30% */
+  height: 234px;
   top: 10%;
-  left: 20%;
+  right: 55%;
   animation: float1 6s ease-in-out infinite;
 }
 
 .image-2 {
-  width: 200px;
-  height: 200px;
-  top: 15%;
-  right: 10%;
+  width: 260px;  /* 200px + 30% */
+  height: 260px;
+  top: 20%;
+  right: 5%;
   animation: float2 8s ease-in-out infinite;
 }
 
 .image-3 {
-  width: 160px;
-  height: 160px;
-  bottom: 30%;
-  left: 35%;
+  width: 208px;  /* 160px + 30% */
+  height: 208px;
+  bottom: 20%;
+  right: 45%;
   animation: float3 7s ease-in-out infinite;
 }
 
@@ -302,6 +316,14 @@ a {
 
 /* ------------------ RESPONSIVE DESIGN ------------------ */
 /* ------------------ RESPONSIVE HERO ------------------ */
+.mobile-order {
+  display: none;
+}
+
+.desktop-only {
+  display: block;
+}
+
 @media (max-width: 1024px) {
   .hero-container {
     grid-template-columns: 1fr;
@@ -310,6 +332,16 @@ a {
     text-align: center;
     justify-items: center;
     margin-top: 3rem;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-order {
+    display: block;
+    order: 2;
+    margin: 2rem 0;
   }
 
   .hero-title h1 {
@@ -321,6 +353,7 @@ a {
   .hero-tags {
     justify-content: center;
     flex-wrap: wrap;
+    order: 3;
   }
 
   .hero-content {
@@ -331,6 +364,7 @@ a {
 
   .hero-contact {
     align-items: center;
+    order: 4;
   }
 
   .hero-visual {
@@ -339,19 +373,21 @@ a {
   }
 
   .images-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
     justify-content: center;
     align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
   }
 
   .image-circle {
     position: static;
-    width: 140px !important;
-    height: 140px !important;
+    width: 160px !important;
+    height: 160px !important;
     animation: none !important;
-    margin: 0.5rem;
+    margin: 0;
   }
 }
 
@@ -378,8 +414,13 @@ a {
   }
 
   .image-circle {
-    width: 110px !important;
-    height: 110px !important;
+    width: 120px !important;
+    height: 120px !important;
+  }
+
+  .images-container {
+    gap: 0.25rem;
+    max-width: 400px;
   }
 
   .hero {
