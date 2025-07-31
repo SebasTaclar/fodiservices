@@ -26,8 +26,7 @@
             <tbody>
               <tr v-for="entry in pendingEntries" :key="entry.id" class="table-row">
                 <td class="employee-info">
-                  <div class="employee-avatar">{{ entry.employeeName.charAt(0).toUpperCase() }}</div>
-                  <span>{{ entry.employeeName }}</span>
+                  <span class="employee-name">{{ entry.employeeName }}</span>
                 </td>
                 <td>
                   <span class="role-badge" :class="entry.employeeRole">{{ entry.employeeRole.toUpperCase() }}</span>
@@ -206,7 +205,7 @@ const pendingEntries = ref([
   {
     id: 2,
     employeeName: 'Ana Martinez',
-    employeeRole: 'admin',
+    employeeRole: 'empleado',
     entryDateTime: '2025-07-30T14:15:00',
     type: 'doble',
     quantity: 38,
@@ -216,7 +215,7 @@ const pendingEntries = ref([
   {
     id: 3,
     employeeName: 'Luis Garcia',
-    employeeRole: 'admin',
+    employeeRole: 'supervisor',
     entryDateTime: '2025-07-30T08:45:00',
     type: 'fulcro_fijo',
     quantity: 42,
@@ -226,7 +225,7 @@ const pendingEntries = ref([
   {
     id: 4,
     employeeName: 'Maria Lopez',
-    employeeRole: 'admin',
+    employeeRole: 'empleado',
     entryDateTime: '2025-07-29T15:20:00',
     type: 'toma',
     quantity: 35,
@@ -236,12 +235,142 @@ const pendingEntries = ref([
   {
     id: 5,
     employeeName: 'Pedro Silva',
-    employeeRole: 'admin',
+    employeeRole: 'empleado',
     entryDateTime: '2025-07-30T10:00:00',
     type: 'doble',
     quantity: 48,
     shift: 'am',
     status: 'pending'
+  },
+  {
+    id: 6,
+    employeeName: 'Sofia Ramirez',
+    employeeRole: 'supervisor',
+    entryDateTime: '2025-07-30T11:20:00',
+    type: 'fulcro_fijo',
+    quantity: 52,
+    shift: 'am',
+    status: 'approved'
+  },
+  {
+    id: 7,
+    employeeName: 'Diego Morales',
+    employeeRole: 'empleado',
+    entryDateTime: '2025-07-30T16:45:00',
+    type: 'toma',
+    quantity: 41,
+    shift: 'pm',
+    status: 'pending'
+  },
+  {
+    id: 8,
+    employeeName: 'Carmen Ruiz',
+    employeeRole: 'admin',
+    entryDateTime: '2025-07-29T13:30:00',
+    type: 'doble',
+    quantity: 33,
+    shift: 'pm',
+    status: 'approved'
+  },
+  {
+    id: 9,
+    employeeName: 'Roberto Fernandez',
+    employeeRole: 'empleado',
+    entryDateTime: '2025-07-30T07:15:00',
+    type: 'fulcro_fijo',
+    quantity: 47,
+    shift: 'am',
+    status: 'rejected'
+  },
+  {
+    id: 10,
+    employeeName: 'Patricia Delgado',
+    employeeRole: 'supervisor',
+    entryDateTime: '2025-07-30T15:00:00',
+    type: 'toma',
+    quantity: 39,
+    shift: 'pm',
+    status: 'pending'
+  },
+  {
+    id: 11,
+    employeeName: 'Miguel Torres',
+    employeeRole: 'empleado',
+    entryDateTime: '2025-07-30T12:10:00',
+    type: 'doble',
+    quantity: 44,
+    shift: 'pm',
+    status: 'pending'
+  },
+  {
+    id: 12,
+    employeeName: 'Valentina Castro',
+    employeeRole: 'admin',
+    entryDateTime: '2025-07-29T10:30:00',
+    type: 'fulcro_fijo',
+    quantity: 50,
+    shift: 'am',
+    status: 'approved'
+  },
+  {
+    id: 13,
+    employeeName: 'Andres Gutierrez',
+    employeeRole: 'empleado',
+    entryDateTime: '2025-07-30T13:45:00',
+    type: 'toma',
+    quantity: 36,
+    shift: 'pm',
+    status: 'pending'
+  },
+  {
+    id: 14,
+    employeeName: 'Isabella Vargas',
+    employeeRole: 'supervisor',
+    entryDateTime: '2025-07-30T08:20:00',
+    type: 'doble',
+    quantity: 43,
+    shift: 'am',
+    status: 'approved'
+  },
+  {
+    id: 15,
+    employeeName: 'Fernando Ortiz',
+    employeeRole: 'empleado',
+    entryDateTime: '2025-07-29T14:50:00',
+    type: 'fulcro_fijo',
+    quantity: 40,
+    shift: 'pm',
+    status: 'rejected'
+  },
+  {
+    id: 16,
+    employeeName: 'Claudia Mendez',
+    employeeRole: 'admin',
+    entryDateTime: '2025-07-30T11:15:00',
+    type: 'toma',
+    quantity: 46,
+    shift: 'am',
+    status: 'pending'
+  },
+  {
+    id: 17,
+    employeeName: 'Ricardo Jimenez',
+    employeeRole: 'empleado',
+    entryDateTime: '2025-07-30T17:30:00',
+    type: 'doble',
+    quantity: 37,
+    shift: 'pm',
+    status: 'pending'
+  },
+  {
+    id: 18,
+    employeeName: 'Natalia Herrera',
+    employeeRole: 'empleado',
+    entryDateTime: '2025-07-29T09:40:00',
+    type: 'fulcro_fijo',
+    quantity: 51,
+    shift: 'am',
+    status: 'approved'
   }
 ])
 
@@ -625,10 +754,12 @@ const rejectEntry = (entryId: number) => {
 
 .approval-table th,
 .approval-table td {
-  padding: 1rem 0.75rem;
+  padding: 0 0.75rem;
   text-align: left;
   border-bottom: 1px solid var(--border-color, rgba(255, 165, 0, 0.1));
   vertical-align: middle;
+  height: 60px;
+  display: table-cell;
 }
 
 .approval-table th {
@@ -636,6 +767,7 @@ const rejectEntry = (entryId: number) => {
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  padding: 1rem 0.75rem;
 }
 
 .table-row {
@@ -651,19 +783,13 @@ const rejectEntry = (entryId: number) => {
 .employee-info {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  height: 100%;
+  padding: 0.75rem 0;
 }
 
-.employee-avatar {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
+.employee-name {
+  font-weight: 600;
+  color: var(--text-color, #031633);
   font-size: 0.9rem;
 }
 
@@ -682,6 +808,11 @@ const rejectEntry = (entryId: number) => {
 
 .role-badge.supervisor {
   background-color: #3498db;
+  color: white;
+}
+
+.role-badge.empleado {
+  background-color: #28a745;
   color: white;
 }
 
@@ -750,7 +881,9 @@ const rejectEntry = (entryId: number) => {
   gap: 0.5rem;
   align-items: center;
   justify-content: flex-start;
-  min-height: 44px;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .approve-btn,
@@ -762,6 +895,10 @@ const rejectEntry = (entryId: number) => {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  line-height: 1.2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .approve-btn {
@@ -792,6 +929,10 @@ const rejectEntry = (entryId: number) => {
   padding: 0.3rem 0.6rem;
   border-radius: 12px;
   background-color: var(--card-bg, rgba(255, 165, 0, 0.1));
+  line-height: 1.2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (max-width: 1024px) {
