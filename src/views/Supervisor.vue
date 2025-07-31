@@ -10,7 +10,8 @@
       <div class="approval-card">
         <h3>📋 Aprobación de Unidades por Empleado</h3>
         <div class="table-container">
-          <table class="approval-table">
+          <!-- Vista de tabla para desktop -->
+          <table class="approval-table desktop-view">
             <thead>
               <tr>
                 <th>Empleado</th>
@@ -56,6 +57,53 @@
               </tr>
             </tbody>
           </table>
+
+          <!-- Vista de cards para mobile -->
+          <div class="mobile-cards-view">
+            <div v-for="entry in pendingEntries" :key="entry.id" class="mobile-card">
+              <div class="mobile-card-header">
+                <span class="mobile-employee-name">{{ entry.employeeName }}</span>
+                <span class="mobile-status-badge" :class="entry.status">{{ getStatusName(entry.status) }}</span>
+              </div>
+
+              <div class="mobile-card-content">
+                <div class="mobile-info-row">
+                  <span class="mobile-label">Rol:</span>
+                  <span class="mobile-role-badge">{{ entry.employeeRole.toUpperCase() }}</span>
+                </div>
+
+                <div class="mobile-info-row">
+                  <span class="mobile-label">Fecha:</span>
+                  <span class="mobile-value">{{ formatDateTime(entry.entryDateTime) }}</span>
+                </div>
+
+                <div class="mobile-info-row">
+                  <span class="mobile-label">Producto:</span>
+                  <span class="mobile-product-type">{{ getProductTypeName(entry.type) }}</span>
+                </div>
+
+                <div class="mobile-info-row">
+                  <span class="mobile-label">Cantidad:</span>
+                  <span class="mobile-value">{{ entry.quantity }} unidades</span>
+                </div>
+
+                <div class="mobile-info-row">
+                  <span class="mobile-label">Turno:</span>
+                  <span class="mobile-shift-badge" :class="entry.shift">{{ entry.shift === 'am' ? 'Mañana' : 'Tarde'
+                    }}</span>
+                </div>
+              </div>
+
+              <div class="mobile-card-actions" v-if="entry.status === 'pending'">
+                <button @click="approveEntry(entry.id)" class="mobile-approve-btn">
+                  ✓ Aprobar
+                </button>
+                <button @click="rejectEntry(entry.id)" class="mobile-reject-btn">
+                  ✕ Rechazar
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -929,6 +977,183 @@ const rejectEntry = (entryId: number) => {
   .reject-btn {
     font-size: 0.7rem;
     padding: 0.3rem 0.6rem;
+  }
+}
+
+/* Estilos para vista mobile */
+.mobile-cards-view {
+  display: none;
+}
+
+.desktop-view {
+  display: table;
+}
+
+@media (max-width: 768px) {
+  .desktop-view {
+    display: none;
+  }
+
+  .mobile-cards-view {
+    display: block;
+  }
+
+  .mobile-card {
+    background: var(--bg-color, white);
+    border: 1px solid var(--border-color, rgba(255, 165, 0, 0.2));
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(3, 22, 51, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .mobile-card:hover {
+    box-shadow: 0 4px 16px rgba(3, 22, 51, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .mobile-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color, rgba(255, 165, 0, 0.1));
+  }
+
+  .mobile-employee-name {
+    font-weight: 600;
+    color: var(--text-color, #031633);
+    font-size: 1rem;
+  }
+
+  .mobile-status-badge {
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .mobile-status-badge.pending {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+
+  .mobile-status-badge.approved {
+    background-color: #d4edda;
+    color: #155724;
+  }
+
+  .mobile-status-badge.rejected {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+
+  .mobile-card-content {
+    margin-bottom: 1rem;
+  }
+
+  .mobile-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    padding: 0.25rem 0;
+  }
+
+  .mobile-info-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .mobile-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary, #666);
+    font-weight: 500;
+    min-width: 70px;
+  }
+
+  .mobile-value {
+    font-size: 0.8rem;
+    color: var(--text-color, #031633);
+    font-weight: 500;
+    text-align: right;
+  }
+
+  .mobile-role-badge {
+    background-color: var(--card-bg, rgba(255, 165, 0, 0.1));
+    padding: 0.2rem 0.5rem;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    border: 1px solid rgba(255, 165, 0, 0.3);
+    color: var(--text-color, #031633);
+    text-transform: uppercase;
+  }
+
+  .mobile-product-type {
+    background-color: var(--card-bg, rgba(255, 165, 0, 0.1));
+    padding: 0.2rem 0.5rem;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    border: 1px solid rgba(255, 165, 0, 0.3);
+    color: var(--text-color, #031633);
+  }
+
+  .mobile-shift-badge {
+    padding: 0.2rem 0.5rem;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+
+  .mobile-shift-badge.am {
+    background-color: #d4edda;
+    color: #155724;
+  }
+
+  .mobile-shift-badge.pm {
+    background-color: #d1ecf1;
+    color: #0c5460;
+  }
+
+  .mobile-card-actions {
+    display: flex;
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color, rgba(255, 165, 0, 0.1));
+  }
+
+  .mobile-approve-btn,
+  .mobile-reject-btn {
+    flex: 1;
+    background-color: var(--card-bg, rgba(255, 165, 0, 0.1));
+    border: 1px solid rgba(255, 165, 0, 0.3);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-color, #031633);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+  }
+
+  .mobile-approve-btn:hover,
+  .mobile-reject-btn:hover {
+    background-color: rgba(255, 165, 0, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(255, 165, 0, 0.3);
+  }
+
+  .mobile-approve-btn:active,
+  .mobile-reject-btn:active {
+    transform: translateY(0);
   }
 }
 </style>
