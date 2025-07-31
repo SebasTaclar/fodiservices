@@ -1,7 +1,7 @@
 <template>
   <header>
     <nav class="navbar">
-      <RouterLink class="link-navbar home" to="/">FODISERVICES</RouterLink>
+      <RouterLink class="link-navbar home" to="/" @click="closeMobileMenu">FODISERVICES</RouterLink>
 
       <!-- Menu hamburguesa para mobile -->
       <button class="hamburger-menu" @click="toggleMobileMenu" :class="{ 'active': isMobileMenuOpen }">
