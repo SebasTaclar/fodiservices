@@ -5,7 +5,7 @@
       <div class="hero-content">
         <div class="hero-title">
           <h1>EXPERTOS EN
-            OUTSOURCING</h1>
+            ENSAMBLE</h1>
         </div>
 
         <div class="hero-visual mobile-order">
