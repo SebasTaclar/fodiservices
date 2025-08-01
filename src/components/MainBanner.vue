@@ -102,7 +102,7 @@
   z-index: 2;
   text-align: left;
   padding-left: 0;
-  margin-left: 20rem;
+  margin-left: 8rem;
 }
 
 .hero-title {
@@ -203,8 +203,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 100%;
-  overflow: hidden;
+  
 }
 
 .images-container {
@@ -237,24 +236,24 @@ a {
 
 /* Posicionamiento original de las imágenes para desktop */
 .image-1 {
-  width: 320px;
-  height: 320px;
+  width: 290px;
+  height: 290px;
   top: 5%;
   right: 50%;
   animation: float1 6s ease-in-out infinite;
 }
 
 .image-2 {
-  width: 340px;
-  height: 340px;
+  width: 320px;
+  height: 320px;
   top: 25%;
   right: 10%;
   animation: float2 8s ease-in-out infinite;
 }
 
 .image-3 {
-  width: 300px;
-  height: 300px;
+  width: 290px;
+  height: 290px;
   bottom: 10%;
   right: 40%;
   animation: float3 7s ease-in-out infinite;
@@ -423,7 +422,7 @@ a {
     width: 170px !important;
     height: 170px !important;
     top: 25% !important;
-    right: 10% !important;
+    right: -3% !important;
     left: auto !important;
     bottom: auto !important;
   }
@@ -487,26 +486,26 @@ a {
   .mobile-order .image-1 {
     width: 120px !important;
     height: 120px !important;
-    top: 5% !important;
-    right: 50% !important;
+    top: 24% !important;
+    right: 55% !important;
     left: auto !important;
     transform: none !important;
   }
 
   .mobile-order .image-2 {
-    width: 130px !important;
-    height: 130px !important;
-    top: 25% !important;
-    right: 5% !important;
+    width: 120px !important;
+    height: 120px !important;
+    top: 24% !important;
+    right: 10% !important;
     left: auto !important;
     bottom: auto !important;
   }
 
   .mobile-order .image-3 {
-    width: 110px !important;
-    height: 110px !important;
-    bottom: 10% !important;
-    right: 40% !important;
+    width: 120px !important;
+    height: 120px !important;
+    bottom: 47% !important;
+    right: 32% !important;
     left: auto !important;
     top: auto !important;
   }
