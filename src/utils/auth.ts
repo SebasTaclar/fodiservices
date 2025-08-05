@@ -25,6 +25,12 @@ const DEMO_USERS = [
     name: 'Jhon Bustos',
   },
   {
+    email: 'Carolina.bustos@fodi.com',
+    password: 'caro123',
+    role: 'admin',
+    name: 'Carolina Bustos',
+  },
+  {
     email: 'supervisor1@fodiservices.com',
     password: 'super123',
     role: 'supervisor',
